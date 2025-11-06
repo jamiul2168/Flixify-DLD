@@ -681,6 +681,10 @@
             if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || lowerCaseUrl.includes('pixeldrain.dev/api/file/') || lowerCaseUrl.includes('pixeldrain.net/api/file/') || lowerCaseUrl.includes('pixeldrain.biz/api/file/') || lowerCaseUrl.includes('pixeldrain.tech/api/file/') || lowerCaseUrl.includes('pixeldrain.nl/api/file/') || lowerCaseUrl.includes('pixeldra.in/api/file/')) {
                 return true;
             }
+            // *** আপনার যোগ করা নতুন লাইন ***
+            if (lowerCaseUrl.includes('server-flixify.jhprm01.workers.dev')) {
+                return true;
+            }
             
             // পুরোনো চেক
             return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
@@ -1159,32 +1163,9 @@
       })();
     </script>
 
-
-    <script>
-/* ✅ Cloudflare Worker Video Auto-Play Support Added by ChatGPT */
-(function() {
-  const originalIsDirectVideoLink = window.isDirectVideoLink;
-  window.isDirectVideoLink = function(url) {
-    if (typeof url !== 'string') return false;
-
-    // আগের লজিকও থাকবে (যেমন .mp4, pixeldrain ইত্যাদি)
-    const baseCheck = originalIsDirectVideoLink ? originalIsDirectVideoLink(url) : false;
-
-    // Cloudflare Worker link চেক (যেমন *.workers.dev/FILE_ID)
-    const workerPattern = /(https?:\/\/[a-zA-Z0-9\-]+\.workers\.dev\/[a-zA-Z0-9_\-]+)/i;
-
-    if (workerPattern.test(url)) {
-      console.log("✅ Cloudflare Worker video detected:", url);
-      return true; // JWPlayer এ ভিডিও হিসেবে প্লে হবে
-    }
-
-    return baseCheck;
-  };
-})();
-</script>
-
 </body>
 </html>
+
 
 
 
