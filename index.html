@@ -681,6 +681,10 @@
             if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || lowerCaseUrl.includes('pixeldrain.dev/api/file/') || lowerCaseUrl.includes('pixeldrain.net/api/file/') || lowerCaseUrl.includes('pixeldrain.biz/api/file/') || lowerCaseUrl.includes('pixeldrain.tech/api/file/') || lowerCaseUrl.includes('pixeldrain.nl/api/file/') || lowerCaseUrl.includes('pixeldra.in/api/file/')) {
                 return true;
             }
+            // আপনার যোগ করা নতুন Flixify সার্ভার চেক
+            if (lowerCaseUrl.includes('server-flixify.jhprm01.workers.dev')) {
+                return true;
+            }
             
             // পুরোনো চেক
             return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
@@ -1160,3 +1164,4 @@
     </script>
 </body>
 </html>
+
