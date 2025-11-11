@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flixify DLD System</title>
+    <title>DLD System</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
@@ -556,14 +556,14 @@
     
     <div class="container">
         <header>
-            <h1>Flixify Download System</h1>
+            <h1>JH Movie Hub Download System</h1>
             <p class="subtitle">Download your favorite movies in high quality</p>
         </header>
         <div id="welcomeMessage" class="welcome-message">
             <div class="welcome-icon"><i class="fas fa-film"></i></div>
             <h2>Welcome!</h2>
             <p>Visit our movie site. The link is provided below!</p>
-            <div class="url-example">flixify.jhtone.site</div>
+            <div class="url-example">jhmhub.jhtone.site</div>
         </div>
     </div>
     
@@ -576,7 +576,7 @@
     <div id="notification" class="notification"><span id="notificationText"></span></div>
     
     <footer>
-        <p>© 2025 Flixify Team! | All Rights Reserved!</p>
+        <p>© 2025 JH Movie Hub Team! | All Rights Reserved!</p>
     </footer>
 
     <script>
@@ -588,7 +588,7 @@
         const premiumPurchaseUrl = 'https://offer.prm.jhmhub.jhtone.site/';
         
         // আপনার অনুরোধ অনুযায়ী দুটি সাইট যোগ করা হয়েছে
-        const adminReferrers = ['https://prm.flixify.jhtone.site/', 'https://prm.18plus.jhtone.site/'];
+        const adminReferrers = ['https://prm.jhmhub.jhtone.site/', 'https://prm.18plus.jhtone.site/'];
         const isFromPremiumSite = adminReferrers.some(referrer => document.referrer.startsWith(referrer));
         
         let isDownloadUnlocked = isFromPremiumSite;
@@ -681,10 +681,6 @@
             if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || lowerCaseUrl.includes('pixeldrain.dev/api/file/') || lowerCaseUrl.includes('pixeldrain.net/api/file/') || lowerCaseUrl.includes('pixeldrain.biz/api/file/') || lowerCaseUrl.includes('pixeldrain.tech/api/file/') || lowerCaseUrl.includes('pixeldrain.nl/api/file/') || lowerCaseUrl.includes('pixeldra.in/api/file/')) {
                 return true;
             }
-            // আপনার যোগ করা নতুন Flixify সার্ভার চেক
-            if (lowerCaseUrl.includes('server-flixify.jhprm01.workers.dev')) {
-                return true;
-            }
             
             // পুরোনো চেক
             return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
@@ -774,18 +770,18 @@
                         primary: "html5",
                         displaytitle: true,
                         cast: {},
-                        playbackRateControls: false,
+                        playbackRateControls: true,
                         logo: {
-                            file: "https://i.ibb.co/S76vkgqv/flixify-jhtone-sote-removebg-preview.png",
+                            file: "#",
                             position: "top-left"
                         },
                         skin: {
                             controlbar: {
-                                "icons": "#00d5ff",
-                                "iconsActive": "#00d5ff"
+                                "icons": "#fff",
+                                "iconsActive": "#00DAB4"
                             },
-                            menus: {"textActive": "#00d5ff"},
-                            tooltips: {"text": "#00d5ff"}
+                            menus: {"textActive": "#fff"},
+                            tooltips: {"text": "#000"}
                         },
                         advertising: {
                             client: "vast",
@@ -1017,7 +1013,7 @@
                                 linkContent = `
                                     <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
                                         <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 8px; color: var(--accent-red); font-weight: 500; font-size: 0.8rem; font-style: italic;">
-                                           <i class="fas fa-lock" style="font-size: 0.7rem;"></i>শুধু মাত্র প্রিমিয়াম ইউজারদের জন্য!
+                                           <i class="fas fa-lock" style="font-size: 0.7rem;"></i>শুধু প্রিমিয়াম ইউজার
                                         </span>
                                         ${buttonHtml}
                                     </div>
