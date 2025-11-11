@@ -428,6 +428,10 @@
 
         .telegram-icon svg { fill: #fff; width: 26px; height: 26px; }
 
+        /* --- REMOVED: YOUTUBE-STYLE PLAYER STYLES (lines 628-879) --- */
+        
+        /* --- REMOVED: Old .video-container, .custom-spinner-overlay, .resume-indicator STYLES (lines 881-934) --- */
+
         @media (max-width: 768px) {
             .modal-content { padding: 30px 0; }
             .modal-inner-padding { padding: 0 20px; }
@@ -437,6 +441,8 @@
             .download-btn { align-self: stretch; justify-content: center; }
             h1 { font-size: 2.8rem; }
             .subtitle { font-size: 1.2rem; }
+            
+            /* REMOVED: Old player mobile styles */
         }
         
        .recommended-badge {
@@ -626,37 +632,7 @@
             }
         });
 
-        // Improved API validation
-        function validateApiUrl() {
-            return fetch(API_URL + '?id=test', {
-                method: 'GET',
-                mode: 'cors',
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                console.log('API Status:', response.status);
-                return response.text();
-            })
-            .then(text => {
-                console.log('API Response sample:', text.substring(0, 100));
-                return true;
-            })
-            .catch(error => {
-                console.error('API Validation Failed:', error);
-                showNotification('API connection issue detected', 'error');
-                return false;
-            });
-        }
-
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Validate API on load
-            const isApiValid = await validateApiUrl();
-            if (!isApiValid) {
-                showNotification('Warning: API connection may have issues', 'error');
-            }
-            
+        document.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const movieId = urlParams.get('id');
             if (movieId) {
@@ -673,126 +649,28 @@
             setTimeout(() => { notification.classList.remove('show'); }, 4000);
         }
         
-        // Improved fetch with better error handling
-        async function safeFetch(url, options = {}) {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 15000); // 15 second timeout
-            
-            try {
-                const response = await fetch(url, {
-                    ...options,
-                    signal: controller.signal,
-                    mode: 'cors',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        ...options.headers
-                    }
-                });
-                
-                clearTimeout(timeoutId);
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
-                const contentType = response.headers.get('content-type');
-                if (contentType && contentType.includes('application/json')) {
-                    return await response.json();
-                } else {
-                    const text = await response.text();
-                    try {
-                        return JSON.parse(text);
-                    } catch {
-                        throw new Error('Invalid JSON response');
-                    }
-                }
-            } catch (error) {
-                clearTimeout(timeoutId);
-                
-                if (error.name === 'AbortError') {
-                    throw new Error('Request timeout - server took too long to respond');
-                } else if (error.name === 'TypeError') {
-                    throw new Error('Network error - please check your internet connection');
-                } else {
-                    throw error;
-                }
-            }
-        }
-        
-        async function loadMovieDetails(id) {
+        function loadMovieDetails(id) {
             currentMovieId = id;
             const modalBody = document.getElementById('modalBody');
             modalBody.innerHTML = `<div class="loading"><div class="spinner"></div></div>`;
             modal.style.display = 'block';
             setTimeout(() => modal.classList.add('show'), 10);
             
-            try {
-                const data = await safeFetch(`${API_URL}?id=${encodeURIComponent(id)}`);
-                
-                if (data.error) {
-                    showError(data.error);
-                    showNotification(`Error: ${data.error}`, 'error');
-                } else {
-                    openMovieModal(data);
-                    showNotification('Movie loaded successfully!', 'success');
-                }
-            } catch (error) {
-                console.error('Load movie error:', error);
-                showError(`Failed to load: ${error.message}`);
-                showNotification('Connection error. Please try again.', 'error');
-                
-                // Try fallback method
-                tryFallbackMethod(id);
-            }
-        }
-
-        // Fallback method for CORS issues
-        function tryFallbackMethod(id) {
-            const script = document.createElement('script');
-            const callbackName = 'jsonpCallback_' + Date.now();
-            
-            window[callbackName] = function(data) {
-                if (data.error) {
-                    showError(data.error);
-                } else {
-                    openMovieModal(data);
-                    showNotification('Movie loaded via fallback method!', 'success');
-                }
-                delete window[callbackName];
-                if (script.parentNode) {
-                    script.parentNode.removeChild(script);
-                }
-            };
-            
-            script.src = `${API_URL}?id=${encodeURIComponent(id)}&callback=${callbackName}`;
-            document.head.appendChild(script);
-            
-            // Cleanup after timeout
-            setTimeout(() => {
-                if (script.parentNode) {
-                    script.parentNode.removeChild(script);
-                }
-                if (window[callbackName]) {
-                    delete window[callbackName];
-                }
-            }, 10000);
-        }
-        
-        function showError(error) {
-            const modalBody = document.getElementById('modalBody');
-            modalBody.innerHTML = `
-                <div class="modal-inner-padding">
-                    <h2 class="movie-title">Error Loading Movie</h2>
-                    <p class="movie-description">${error}</p>
-                    <div style="text-align: center; margin-top: 30px;">
-                        <button onclick="location.reload()" class="download-btn" style="margin: 10px;">
-                            <i class="fas fa-redo"></i> Try Again
-                        </button>
-                        <button onclick="modal.style.display = 'none'" class="download-btn" style="margin: 10px; background: var(--grad-blue);">
-                            <i class="fas fa-times"></i> Close
-                        </button>
-                    </div>
-                </div>`;
+            fetch(`${API_URL}?id=${id}`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        showError(data.error);
+                        showNotification(`Error: ${data.error}`, 'error');
+                    } else {
+                        openMovieModal(data);
+                        showNotification('Movie loaded successfully!', 'success');
+                    }
+                })
+                .catch(error => {
+                    showError(`Network error: ${error.message}`);
+                    showNotification('Failed to load movie', 'error');
+                });
         }
         
         function isDirectVideoLink(url) {
@@ -804,9 +682,9 @@
                 return true;
             }
             // আপনার যোগ করা নতুন Flixify সার্ভার চেক
-            if (lowerCaseUrl.includes('server-flixify.jhprm01.workers.dev')) {
-                return true;
-            }
+            if (lowerCaseUrl.includes('server-flixify.jhprm01.workers.dev')) {
+                return true;
+            }
             
             // পুরোনো চেক
             return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
@@ -826,6 +704,8 @@
             return `<div class="embed-container"><iframe src="${iframeSrc}" frameborder="0" allowfullscreen></iframe></div>`;
         };
 
+        // --- REPLACED: Old renderPlayer and initializeYouTubePlayer functions ---
+        // This new function integrates JWPlayer.
         function renderPlayer(containerSelector, link, thumbnailUrl) {
             const container = document.querySelector(containerSelector);
             if (!container) return;
@@ -1124,6 +1004,7 @@
                         
                         let linkContent;
                         if (isNotWorking) {
+                            // not-working-label এর জন্য একটি বেসিক স্টাইল যোগ করা হয়েছে
                             linkContent = `<span style="padding: 10px 15px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 12px; color: var(--accent-red); font-weight: 600; font-size: 0.9rem; cursor: not-allowed;">Not Working</span>`;
                         
                         } else {
@@ -1198,47 +1079,50 @@
             });
         }
         
-        document.addEventListener('click', e => {
-            const downloadBtn = e.target.closest('.download-btn');
-            if (downloadBtn) {
-                e.preventDefault(); 
-                if (!downloadBtn.dataset.downloadUrl) return;
-
-                // --- START: MODIFIED CLICK LOGIC ---
-                const isPremiumButton = downloadBtn.dataset.premium === 'true';
-
-                if (isPremiumButton) {
-                    // This is a 1080p button
-                    if (isFromPremiumSite) {
-                        // User is premium, let them download
-                        window.open(downloadBtn.dataset.downloadUrl, '_blank');
-                    } else {
-                        // User is not premium, send them to buy
-                        window.open(premiumPurchaseUrl, '_blank'); 
-                        // Do NOT set isDownloadUnlocked = true
-                        // Do NOT restyle the button
-                    }
-                } else {
-                    // This is a regular button, use existing ad-click logic
-                    if (isDownloadUnlocked) {
-                        window.open(downloadBtn.dataset.downloadUrl, '_blank');
-                    } else {
-                        window.open(downloadUnlockUrl, '_blank');
-                        isDownloadUnlocked = true;
-                        
-                        // Update all NON-PREMIUM buttons
-                        document.querySelectorAll('.download-btn[data-download-url]:not([data-premium="true"])').forEach(btn => {
-                            btn.classList.remove('locked-btn');
-                            btn.innerHTML = '<i class="fas fa-download"></i> Download';
-                            btn.href = btn.dataset.downloadUrl;
-                            btn.target = "_blank";
-                        });
-                    }
-                }
-                // --- END: MODIFIED CLICK LOGIC ---
-            }
-        });
+        function showError(error) {
+            document.getElementById('modalBody').innerHTML = `<div class="modal-inner-padding"><h2 class="movie-title">Error</h2><p class="movie-description">${error}</p></div>`;
+        }
         
+        document.addEventListener('click', e => {
+            const downloadBtn = e.target.closest('.download-btn');
+            if (downloadBtn) {
+                e.preventDefault(); 
+                if (!downloadBtn.dataset.downloadUrl) return;
+
+                // --- START: MODIFIED CLICK LOGIC ---
+                const isPremiumButton = downloadBtn.dataset.premium === 'true';
+
+                if (isPremiumButton) {
+                    // This is a 1080p button
+                    if (isFromPremiumSite) {
+                        // User is premium, let them download
+                        window.open(downloadBtn.dataset.downloadUrl, '_blank');
+                    } else {
+                        // User is not premium, send them to buy
+                        window.open(premiumPurchaseUrl, '_blank'); 
+                        // Do NOT set isDownloadUnlocked = true
+                        // Do NOT restyle the button
+                    }
+                } else {
+                    // This is a regular button, use existing ad-click logic
+                    if (isDownloadUnlocked) {
+                        window.open(downloadBtn.dataset.downloadUrl, '_blank');
+                    } else {
+                        window.open(downloadUnlockUrl, '_blank');
+                        isDownloadUnlocked = true;
+                        
+                        // Update all NON-PREMIUM buttons
+                        document.querySelectorAll('.download-btn[data-download-url]:not([data-premium="true"])').forEach(btn => {
+                            btn.classList.remove('locked-btn');
+                            btn.innerHTML = '<i class="fas fa-download"></i> Download';
+                            btn.href = btn.dataset.downloadUrl;
+                            btn.target = "_blank";
+                        });
+                    }
+                }
+                // --- END: MODIFIED CLICK LOGIC ---
+            }
+        });
         document.addEventListener('keydown', e => { if (modal.style.display === 'block' && e.key === 'Escape') e.preventDefault(); });
         document.addEventListener('contextmenu', e => e.preventDefault());
         document.onkeydown = e => {
@@ -1280,6 +1164,3 @@
     </script>
 </body>
 </html>
-
-
-
