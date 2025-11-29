@@ -894,6 +894,47 @@
             border: 1px solid rgba(255, 0, 0, 0.3);
         }
 
+        /* Enhanced JW Player Styling */
+        .jwplayer {
+            border-radius: var(--radius) !important;
+            overflow: hidden !important;
+        }
+        
+        .jw-skin-flixify .jw-controls {
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent) !important;
+        }
+        
+        .jw-skin-flixify .jw-button-color {
+            color: var(--primary) !important;
+        }
+        
+        .jw-skin-flixify .jw-progress {
+            background: rgba(255,255,255,0.2) !important;
+        }
+        
+        .jw-skin-flixify .jw-slider-horizontal .jw-rail {
+            background: rgba(255,255,255,0.2) !important;
+        }
+        
+        .jw-skin-flixify .jw-slider-horizontal .jw-buffer {
+            background: rgba(255,255,255,0.4) !important;
+        }
+        
+        .jw-skin-flixify .jw-slider-horizontal .jw-progress {
+            background: var(--primary) !important;
+        }
+        
+        .jw-skin-flixify .jw-slider-horizontal .jw-knob {
+            background: var(--accent) !important;
+        }
+        
+        .jw-skin-flixify .jw-time-tip {
+            background: var(--glass) !important;
+            backdrop-filter: blur(10px) !important;
+            border: 1px solid var(--glass-edge) !important;
+            color: var(--text) !important;
+        }
+
         @media (max-width: 768px) {
             .modal-content { padding: 30px 0; }
             .modal-inner-padding { padding: 0 20px; }
@@ -1121,8 +1162,6 @@
                     }];
                 }
 
-                const storageKey = `jhmhub_resume_jw_${link}`; // Key for resume data
-
                 // 4. Setup JWPlayer
                 try {
                     player = jwplayer("jwplayer-video");
@@ -1143,12 +1182,10 @@
                             position: "top-left"
                         },
                         skin: {
-                            controlbar: {
-                                "icons": "#00d5ff",
-                                "iconsActive": "#00d5ff"
-                            },
-                            menus: {"textActive": "#00d5ff"},
-                            tooltips: {"text": "#00d5ff"}
+                            name: "flixify",
+                            active: "#ff0059",
+                            inactive: "#00f7ff",
+                            background: "rgba(0,0,0,0.8)"
                         },
                         advertising: {
                             client: "vast",
@@ -1230,41 +1267,8 @@
                                 }
                             }
                         }, 1000); // Wait 1 second for JWPlayer to fully render
-                        
-                        // Resume playback
-                        const savedTime = localStorage.getItem(storageKey);
-                        if (savedTime && player.getDuration()) {
-                            const time = parseFloat(savedTime);
-                            if (time > 5 && time < (player.getDuration() - 10)) {
-                                player.seek(time);
-                            }
-                        }
                     });
 
-                    // Save progress periodically
-                    jwTimeInterval = setInterval(() => {
-                        if (player && player.getState && player.getState() === 'playing') {
-                            const currentTime = player.getPosition();
-                            if (currentTime > 0) {
-                                localStorage.setItem(storageKey, currentTime);
-                            }
-                        }
-                    }, 5000);
-
-                    // Save progress on page close
-                    jwSaveListener = () => {
-                        if (player && player.getPosition) {
-                            const currentTime = player.getPosition();
-                            if (currentTime > 0) {
-                                localStorage.setItem(storageKey, currentTime);
-                            }
-                        }
-                        if (jwTimeInterval) {
-                            clearInterval(jwTimeInterval);
-                        }
-                    };
-                    window.addEventListener('beforeunload', jwSaveListener);
-                    
                     // Expose player to global scope
                     window.player = player;
                 
@@ -1694,5 +1698,3 @@
     </script>
 </body>
 </html>
-
-
