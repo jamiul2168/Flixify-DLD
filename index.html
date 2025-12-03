@@ -977,7 +977,7 @@
     </footer>
 
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzT11jJUOFiGz3U2cBoHZ2pHu8FYJN8t_PHweNYXrAuIOKi4TzPfrvCdFyKMARxRBKf/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyaaf0UKjCoBc_HZWtr1wA_AXr4Q5q1-6A-78kVoAixxUwL5FwGwhrha1ZbNxAXU6gO/exec';
 const modal = document.getElementById('movieModal');
 let player = null;
 let currentMovieId = null;
@@ -1339,14 +1339,22 @@ function openMovieModal(movie) {
         const names = movie.LINK_NAME.split(',').map(name => name ? name.trim() : '');
         const episodeGroups = {};
         
-        // Filter out "With Ads" episodes for premium users
+        // Filter episodes based on user type
         names.forEach((name, index) => {
             const episodeName = name || `Download ${index + 1}`;
+            const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
+                                   episodeName.toLowerCase().includes('premium');
+            const isWithAds = episodeName.toLowerCase().includes('with ads') || 
+                             episodeName.toLowerCase().includes('ads');
             
-            // Skip "With Ads" episodes for premium users
-            if (isFromPremiumSite && (episodeName.toLowerCase().includes('with ads') || 
-                                      episodeName.toLowerCase().includes('ads'))) {
-                return; // Skip this episode
+            // Hide [Premium] episodes from free users
+            if (!isFromPremiumSite && isPremiumEpisode) {
+                return; // Skip this episode for free users
+            }
+            
+            // Hide "With Ads" episodes from premium users
+            if (isFromPremiumSite && isWithAds) {
+                return; // Skip this episode for premium users
             }
             
             if (!episodeGroups[episodeName]) episodeGroups[episodeName] = [];
@@ -1363,6 +1371,8 @@ function openMovieModal(movie) {
             let episodeEmoji = '💫';
             let qualityClass = '';
             let subText = '';
+            const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
+                                   episodeName.toLowerCase().includes('premium');
             
             if (episodeName.toLowerCase().includes('telegram')) {
                 episodeEmoji = '🚀';
@@ -1383,6 +1393,10 @@ function openMovieModal(movie) {
             } else if (episodeName.toLowerCase().includes('download')) {
                 episodeEmoji = '📥';
                 subText = 'Direct Download';
+            } else if (isPremiumEpisode) {
+                episodeEmoji = '👑';
+                qualityClass = 'premium';
+                subText = 'Premium Exclusive Content';
             }
 
             const qualityLinks = qualities.map(q => {
@@ -1390,29 +1404,36 @@ function openMovieModal(movie) {
                 const is1080p = episodeName.toLowerCase().includes('1080p');
                 const isWithAds = episodeName.toLowerCase().includes('with ads') || 
                                  episodeName.toLowerCase().includes('ads');
+                const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
+                                       episodeName.toLowerCase().includes('premium');
                 
-                // Check if premium user
+                // Check button unlock status
                 let isThisButtonUnlocked;
-                if (is1080p) {
-                    // For 1080p buttons, only premium users can access
+                
+                if (isPremiumEpisode) {
+                    // Premium episodes are only visible to premium users (filtered above)
+                    isThisButtonUnlocked = isFromPremiumSite;
+                } else if (is1080p) {
+                    // 1080p buttons require premium
                     isThisButtonUnlocked = isFromPremiumSite;
                 } else if (isFromPremiumSite) {
-                    // Premium users don't see "With Ads" buttons at all (filtered above)
-                    // For other buttons, premium users see them unlocked
+                    // Premium users see all non-premium, non-1080p buttons unlocked
                     isThisButtonUnlocked = true;
                 } else if (isWithAds) {
-                    // Regular users see "With Ads" buttons as locked
+                    // Free users need to unlock "With Ads" buttons individually
                     const buttonKey = `unlocked_${btoa(q.link).slice(0, 16)}`;
                     isThisButtonUnlocked = sessionStorage.getItem(buttonKey) === 'true';
                 } else {
-                    // Regular non-ads buttons for regular users
+                    // Regular non-ads buttons for free users
                     isThisButtonUnlocked = true;
                 }
 
                 const buttonClass = isThisButtonUnlocked ? 'download-btn' : 'download-btn locked-btn';
                 const buttonIcon = isThisButtonUnlocked ? 'fas fa-download' : 'fas fa-lock';
-                const buttonText = isThisButtonUnlocked ? 'Download Now' : (is1080p ? 'Premium Only' : 'Unlock Access');
-                const premiumAttribute = is1080p ? 'data-premium="true"' : '';
+                const buttonText = isThisButtonUnlocked ? 'Download Now' : 
+                                 (is1080p ? 'Premium Only' : 
+                                  (isPremiumEpisode ? 'Premium Only' : 'Unlock Access'));
+                const premiumAttribute = (is1080p || isPremiumEpisode) ? 'data-premium="true"' : '';
                 const buttonId = `btn_${btoa(q.link).slice(0, 16)}`;
                 
                 let qualityDisplayHtml = '';
@@ -1499,6 +1520,26 @@ function openMovieModal(movie) {
                             <span class="server-badge">Backup</span>
                         </div>
                     `;
+                } else if (isPremiumEpisode) {
+                    qualityDisplayHtml = `
+                        <div class="download-option-highlight premium">
+                            <span class="emoji">👑</span>
+                            <div>
+                                <div class="quality-badge" style="color: #FFD700;">Premium Quality</div>
+                                <div class="download-stats">
+                                    <span class="download-count">⭐ Exclusive Content</span>
+                                    <span>•</span>
+                                    <span class="server-status">🟢 Online</span>
+                                </div>
+                                <div class="speed-indicator">
+                                    <i class="fas fa-crown"></i>
+                                    <span>Premium Speed</span>
+                                </div>
+                            </div>
+                            <span class="size-info">Premium Only</span>
+                            <span class="server-badge" style="background: linear-gradient(135deg, #FFD700, #FFA500);">PREMIUM</span>
+                        </div>
+                    `;
                 } else {
                     qualityDisplayHtml = `
                         <div class="download-option-highlight">
@@ -1526,7 +1567,7 @@ function openMovieModal(movie) {
                 } else {
                     const buttonHtml = `<a href="#" id="${buttonId}" data-download-url="${q.link}" class="${buttonClass}" ${premiumAttribute}><i class="${buttonIcon}"></i> ${buttonText}</a>`;
                     
-                    if (!isThisButtonUnlocked && is1080p) {
+                    if (!isThisButtonUnlocked && (is1080p || isPremiumEpisode)) {
                         linkContent = `
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
                                 <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 8px; color: var(--accent-red); font-weight: 500; font-size: 0.8rem; font-style: italic;">
@@ -1625,9 +1666,11 @@ document.addEventListener('click', e => {
         const is1080p = downloadUrl.toLowerCase().includes('1080p') || 
                        (downloadBtn.closest('.episode-item') && 
                         downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('1080p'));
+        const isPremiumEpisode = downloadBtn.closest('.episode-item') && 
+                               downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('[premium]');
         
-        if (isPremiumButton || is1080p) {
-            // This is a 1080p button
+        if (isPremiumButton || is1080p || isPremiumEpisode) {
+            // This is a premium button (1080p or [Premium])
             if (isFromPremiumSite) {
                 window.open(downloadUrl, '_blank');
             } else {
@@ -1701,4 +1744,3 @@ document.onkeydown = e => {
     </script>
 </body>
 </html>
-
