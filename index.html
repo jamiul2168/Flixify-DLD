@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Flixify DLD System</title>
+    
+    <!-- Fonts & Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
-
-  
+    
+    <!-- JW Player -->
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script type="text/javascript">jwplayer.key="zTEbSn/eAplL0RLXT030FzOcek6qXmtrxju6Jg==";</script>
 
-
     <style>
+        /* ===== CSS RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -58,7 +60,7 @@
             z-index: 1; 
         }
         
-        /* Liquid Glass Header */
+        /* ===== HEADER STYLES ===== */
         header {
             text-align: center; 
             padding: 50px 30px; 
@@ -103,7 +105,7 @@
             font-weight: 300;
         }
         
-        /* Liquid Glass Welcome Message */
+        /* ===== WELCOME MESSAGE ===== */
         .welcome-message {
             text-align: center; 
             padding: 90px 40px; 
@@ -159,7 +161,7 @@
             font-weight: 500;
         }
         
-        /* Liquid Glass Modal */
+        /* ===== MODAL STYLES ===== */
         .modal {
             display: none; 
             position: fixed; 
@@ -175,9 +177,11 @@
             opacity: 0; 
             transition: opacity 0.4s ease;
             padding: 50px 0; 
+            justify-content: center;
+            align-items: center;
         }
         
-        .modal.show { opacity: 1; }
+        .modal.show { opacity: 1; display: flex; }
         
         .modal-content {
             background: var(--glass);
@@ -196,6 +200,28 @@
         }
 
         .modal.show .modal-content { transform: scale(1); }
+        
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.15);
+            color: var(--text);
+            border: none;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+        
+        .close-btn:hover {
+            background: var(--primary);
+            transform: rotate(90deg) scale(1.1);
+        }
 
         .modal-inner-padding {
             padding: 0 50px;
@@ -249,6 +275,7 @@
             max-width: 900px; 
         }
         
+        /* ===== DOWNLOAD & EMBED SECTIONS ===== */
         .download-section, .embed-section { 
             padding-top: 40px; 
             margin-top: 40px; 
@@ -276,6 +303,7 @@
             font-size: 2rem; 
         }
 
+        /* ===== EPISODE LIST ===== */
         .episode-list { 
             display: flex; 
             flex-direction: column; 
@@ -374,7 +402,7 @@
             color: var(--text); 
         }
         
-        /* Liquid Glass Download Button */
+        /* ===== BUTTON STYLES ===== */
         .download-btn {
             display: inline-flex; 
             align-items: center; 
@@ -476,6 +504,7 @@
             font-weight: 700;
         }
 
+        /* ===== FOOTER ===== */
         footer {
             text-align: center; 
             margin-top: 100px; 
@@ -487,6 +516,7 @@
             backdrop-filter: blur(10px);
         }
         
+        /* ===== LOADING & NOTIFICATION ===== */
         .loading { 
             display: flex; 
             justify-content: center; 
@@ -531,6 +561,7 @@
         .notification.error { border-left: 5px solid var(--primary); }
         .notification.success { border-left: 5px solid var(--accent); }
         
+        /* ===== EPISODE SELECTOR ===== */
         .episode-selector {
             display: flex; 
             align-items: center; 
@@ -584,6 +615,7 @@
             padding: 12px 20px;
         }
         
+        /* ===== PLAYER CONTAINER ===== */
         #embedPlayerContainer {
             margin-top: 25px;
             min-height: 200px; 
@@ -620,6 +652,7 @@
             border-radius: var(--radius); 
         }
         
+        /* ===== BENGALI TEXT STYLES ===== */
         .download-warning {
            color: #ffd700; 
            font-weight: 700; 
@@ -640,7 +673,7 @@
            letter-spacing: 0.3px;
         }
 
-        /* Liquid Glass Telegram Float */
+        /* ===== TELEGRAM FLOAT ===== */
         .telegram-float { 
             position: fixed; 
             bottom: 25px; 
@@ -675,6 +708,7 @@
             height: 26px; 
         }
 
+        /* ===== BADGES ===== */
         .recommended-badge {
            color: #fff;
            font-size: 0.75rem;
@@ -688,7 +722,7 @@
            background: linear-gradient(45deg, var(--primary), var(--accent));
         }
 
-        /* ENHANCED DOWNLOAD OPTIONS WITH PROFESSIONAL DESIGN */
+        /* ===== DOWNLOAD OPTIONS ===== */
         .download-option-highlight {
             display: flex;
             align-items: center;
@@ -781,7 +815,7 @@
             background: linear-gradient(135deg, #00cc00, #66ff66);
         }
 
-        /* Episode Header with Enhanced Emoji */
+        /* ===== EPISODE HEADER ===== */
         .episode-header-with-emoji {
             display: flex;
             align-items: center;
@@ -817,7 +851,7 @@
             font-weight: 500;
         }
 
-        /* Download Stats */
+        /* ===== DOWNLOAD STATS ===== */
         .download-stats {
             display: flex;
             align-items: center;
@@ -836,7 +870,7 @@
             border-radius: 10px;
         }
 
-        /* Quality Indicators */
+        /* ===== QUALITY INDICATORS ===== */
         .quality-indicator {
             display: flex;
             align-items: center;
@@ -865,7 +899,7 @@
             box-shadow: 0 0 8px #ff4444;
         }
 
-        /* NEW: Download Speed Indicator */
+        /* ===== SPEED INDICATOR ===== */
         .speed-indicator {
             display: flex;
             align-items: center;
@@ -875,7 +909,7 @@
             margin-top: 3px;
         }
 
-        /* NEW: Server Status Indicator */
+        /* ===== SERVER STATUS ===== */
         .server-status {
             display: flex;
             align-items: center;
@@ -894,7 +928,7 @@
             border: 1px solid rgba(255, 0, 0, 0.3);
         }
 
-        /* Enhanced JW Player Styling */
+        /* ===== JW PLAYER CUSTOM SKIN ===== */
         .jwplayer {
             border-radius: var(--radius) !important;
             overflow: hidden !important;
@@ -935,6 +969,7 @@
             color: var(--text) !important;
         }
 
+        /* ===== RESPONSIVE DESIGN ===== */
         @media (max-width: 768px) {
             .modal-content { padding: 30px 0; }
             .modal-inner-padding { padding: 0 20px; }
@@ -946,16 +981,87 @@
             .subtitle { font-size: 1.2rem; }
             .download-option-highlight { flex-wrap: wrap; }
             .episode-header-with-emoji { flex-direction: column; align-items: flex-start; gap: 8px; }
+            .premium-download-buttons { flex-direction: column; align-items: center; gap: 10px !important; }
+            .premium-download-buttons .unlock-stream-btn { width: 100%; }
+            
+            /* Mobile specific adjustments */
+            #embedPlayerContainer {
+                margin-top: 5px !important;
+                min-height: 150px !important;
+            }
+
+            .embed-section {
+                margin-top: 10px !important;
+                padding-top: 10px !important;
+            }
+
+            .modal-content {
+                padding-top: 10px !important;
+                padding-bottom: 10px !important;
+            }
+
+            .modal-inner-padding {
+                padding-left: 10px !important;
+                padding-right: 10px !important;
+            }
+
+            .unlock-stream-btn {
+                margin-top: 10px !important;
+                margin-bottom: 10px !important;
+            }
+            
+            /* VLC Modal mobile adjustments */
+            #vlcPopupModal .modal-content {
+                padding: 20px 15px !important;
+                max-width: 95% !important;
+            }
+
+            #vlcLinkDisplay {
+                font-size: 0.85rem !important;
+                padding: 10px !important;
+            }
+
+            .vlc-row {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                margin: 15px 0;
+                flex-wrap: nowrap;
+                overflow: hidden;
+            }
+
+            .vlc-row button {
+                padding: 10px 15px !important;
+                font-size: 0.9rem !important;
+                white-space: nowrap;
+            }
+
+            .vlc-row #vlcLinkDisplay {
+                flex: 1;
+                margin: 0;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .vlc-download-btn {
+                width: 100%;
+                margin: 5px 0 !important;
+                padding: 12px 0 !important;
+                font-size: 0.95rem !important;
+            }
         }
     </style>
 </head>
 <body>
     
+    <!-- ===== MAIN CONTAINER ===== -->
     <div class="container">
         <header>
             <h1>Flixify Download System</h1>
             <p class="subtitle">Download your favorite movies in high quality</p>
         </header>
+        
         <div id="welcomeMessage" class="welcome-message">
             <div class="welcome-icon"><i class="fas fa-film"></i></div>
             <h2>Welcome!</h2>
@@ -964,307 +1070,450 @@
         </div>
     </div>
     
+    <!-- ===== MOVIE DETAILS MODAL ===== -->
     <div id="movieModal" class="modal">
         <div class="modal-content">
             <div id="modalBody"></div>
         </div>
     </div>
     
-    <div id="notification" class="notification"><span id="notificationText"></span></div>
+    <!-- ===== VLC POPUP MODAL ===== -->
+    <div id="vlcPopupModal" class="modal">
+        <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 700px; padding: 50px 30px;">
+            <button class="close-btn" onclick="closeModal('vlcPopupModal')">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="modal-inner-padding" style="text-align: center; padding: 0 20px;">
+                <h2 class="movie-title" style="font-size: 2rem; margin-bottom: 15px;">
+                    🔗 Sound Problem Solve Guide! 🔗
+                </h2>
+
+                <p class="movie-description" id="vlcPopupMessage" 
+                   style="margin-top: 0; font-weight: 500; color: #FFD700;
+                   max-width: none; font-size: 1.2rem; line-height: 1.5;">
+                    যদি ভিডিওতে সাউন্ড না আসে, তাহলে নিচে কপি আইকোনে ক্লিক করে লিংকটি কপি করুন। এরপর আপনার ডিভাইস অনুযায়ী বাটনে ক্লিক পরবর্তী গাইড লাইন অনুসরণ করুন।  
+                    অবশ্যই আপনার ফোনে (MX Player) বা পিসিতে (VLC Player) ইন্সটল থাকতে হবে।
+                </p>
+
+                <!-- LINK + COPY BUTTON -->
+                <div style="display: flex; align-items: center; gap: 10px; margin: 25px 0; width: 100%;">
+                    <div id="vlcLinkDisplay" 
+                        style="flex: 1; padding: 12px; background: rgba(255,255,255,0.1); 
+                        border-radius: 10px; font-family: monospace; font-size: 0.95rem; 
+                        color: var(--accent); white-space: nowrap; overflow: hidden; 
+                        text-overflow: ellipsis; user-select: none;">
+                    </div>
+                    
+                    <button onclick="copyStreamLink()" 
+                        style="padding: 12px 15px; background: linear-gradient(135deg, #00eeff, #00c0ff); 
+                        color: #000; border-radius: 8px; border: none; cursor: pointer;">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+
+                <!-- VLC DOWNLOAD BUTTONS -->
+                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+                    <a href="https://jhittech.jhtone.site/2025/12/play-online-video-with-vlc.html" 
+                       target="_blank" 
+                       class="download-btn" 
+                       style="padding: 15px 30px;">
+                        <i class="fas fa-desktop"></i> PC Tutorial (VLC Player)!
+                    </a>
+
+                    <a href="https://jhittech.jhtone.site/2025/12/play-online-video-with-vlc.html" 
+                       target="_blank" 
+                       class="download-btn" 
+                       style="padding: 15px 30px;">
+                        <i class="fas fa-mobile-alt"></i> Mobile Tutorial (MX Player)!
+                    </a>
+                </div>
+
+                
+
+                <button onclick="closeModal('vlcPopupModal')" 
+                    class="download-btn" 
+                    style="background: rgba(255,255,255,0.1); color: var(--text); 
+                    border: 1px solid var(--glass-edge); margin-top: 30px;">
+                    <i class="fas fa-times"></i> Close
+                </button>
+            </div>
+        </div>
+    </div>
     
+    <!-- ===== NOTIFICATION ===== -->
+    <div id="notification" class="notification">
+        <span id="notificationText"></span>
+    </div>
+    
+    <!-- ===== FOOTER ===== -->
     <footer>
         <p>© 2025 Flixify Team! | All Rights Reserved!</p>
     </footer>
 
+    <!-- ===== TELEGRAM FLOAT BUTTON ===== -->
+    <a href="https://t.me/flixify_official_group" target="_blank" class="telegram-float">
+        <div class="telegram-icon">
+            <svg viewBox="0 0 64 64">
+                <path d="M56.4,8.2l-51.2,20c-1.7,0.6-1.6,3,0.1,3.5l9.7,2.9c2.1,0.6,3.8,2.2,4.4,4.3l3.8,12.1c0.5,1.6,2.5,2.1,3.7,0.9 l5.2-5.3c0.9-0.9,2.2-1,3.2-0.3l11.5,8.4c1.6,1.2,3.9,0.3,4.3-1.7l8.7-41.8C60.4,9.1,58.4,7.4,56.4,8.2z M50,17.4L29.4,35.6 c-1.1,1-1.9,2.4-2,3.9c-0.2,1.5-2.3,1.7-2.8,0.3l-0.9-3c-0.7-2.2,0.2-4.5,2.1-5.7l23.5-14.6C49.9,16.1,50.5,16.9,50,17.4z"></path>
+            </svg>
+        </div>
+    </a>
+
+    <!-- ===== JAVASCRIPT ===== -->
     <script>
-        const API_URL = 'https://script.google.com/macros/s/AKfycbyaaf0UKjCoBc_HZWtr1wA_AXr4Q5q1-6A-78kVoAixxUwL5FwGwhrha1ZbNxAXU6gO/exec';
-const modal = document.getElementById('movieModal');
-let player = null;
-let currentMovieId = null;
-const downloadUnlockUrl = 'https://contractexcitedly.com/a10riqnm?key=562bf326fa21da046160a7c816701951';
-const premiumPurchaseUrl = 'https://offer.prm.flixify.jhtone.site/';
+        // ===== GLOBAL VARIABLES =====
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw2rRIsT8snsLOrLmeowejc3HqI2gLWmezOWx22uj1nRHBOAYoXt75NGMJRPQYXL7zP/exec';
+        const modal = document.getElementById('movieModal');
+        const vlcPopupModal = document.getElementById('vlcPopupModal'); 
+        let player = null;
+        let currentMovieId = null;
+        let currentStreamingLink = ''; 
+        const downloadUnlockUrl = 'https://contractexcitedly.com/a10riqnm?key=562bf326fa21da046160a7c816701951';
+        const premiumPurchaseUrl = 'https://offer.prm.flixify.jhtone.site/';
+        const adminReferrers = ['https://prm.flixify.jhtone.site/', 'https://prm.flixify.18plus.jhtone.site/'];
+        const isFromPremiumSite = adminReferrers.some(referrer => document.referrer.startsWith(referrer));
+        let isDownloadUnlocked = isFromPremiumSite;
+        let jwSaveListener = null;
+        let jwTimeInterval = null;
 
-const adminReferrers = ['https://prm.flixify.jhtone.site/', 'https://prm.flixify.18plus.jhtone.site/'];
-const isFromPremiumSite = adminReferrers.some(referrer => document.referrer.startsWith(referrer));
-
-let isDownloadUnlocked = isFromPremiumSite;
-
-let jwSaveListener = null;
-let jwTimeInterval = null;
-
-document.addEventListener('keydown', function(e) {
-    if (modal.style.display === 'block' && player && typeof player.getState === 'function') {
-        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
-            return;
-        }
-        
-        if (e.code === 'Space' && document.activeElement && document.activeElement.tagName === 'BUTTON') {
-            return;
-        }
-
-        switch(e.code) {
-            case 'ArrowRight':
-                e.preventDefault();
-                player.seek(player.getPosition() + 10);
-                break;
-            case 'ArrowLeft':
-                e.preventDefault();
-                player.seek(Math.max(0, player.getPosition() - 10));
-                break;
-            case 'Space':
-                e.preventDefault();
-                if (player.getState() === 'playing') {
-                    player.pause();
-                } else {
-                    player.play();
-                }
-                break;
-        }
-    }
-});
-
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const movieId = urlParams.get('id');
-    if (movieId) {
-        loadMovieDetails(movieId);
-        window.history.replaceState({}, document.title, window.location.pathname);
-    }
-});
-
-function showNotification(message, type = 'success') {
-    const notification = document.getElementById('notification');
-    const notificationText = document.getElementById('notificationText');
-    notificationText.textContent = message;
-    notification.className = `notification ${type} show`;
-    setTimeout(() => { notification.classList.remove('show'); }, 4000);
-}
-
-function loadMovieDetails(id) {
-    currentMovieId = id;
-    const modalBody = document.getElementById('modalBody');
-    modalBody.innerHTML = `<div class="loading"><div class="spinner"></div></div>`;
-    modal.style.display = 'block';
-    setTimeout(() => modal.classList.add('show'), 10);
-    
-    fetch(`${API_URL}?id=${id}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
+        // ===== MODAL FUNCTIONS =====
+        function closeModal(modalId) {
+            const targetModal = document.getElementById(modalId);
+            if (targetModal) {
+                targetModal.classList.remove('show');
+                setTimeout(() => targetModal.style.display = 'none', 400);
             }
-            return response.json();
-        })
-        .then(data => {
-            if (!data) {
-                throw new Error('No data received from server');
+        }
+
+        // Global click handler for closing modal on backdrop click
+        document.addEventListener('click', function(event) {
+            if (event.target.id === 'vlcPopupModal') {
+                closeModal('vlcPopupModal');
             }
-            if (data.error) {
-                showError(data.error);
-                showNotification(`Error: ${data.error}`, 'error');
-            } else {
-                openMovieModal(data);
-                showNotification('Movie loaded successfully!', 'success');
-            }
-        })
-        .catch(error => {
-            console.error('Fetch error:', error);
-            showError(`Network error: ${error.message}`);
-            showNotification('Failed to load movie', 'error');
         });
-}
 
-function isDirectVideoLink(url) {
-    if (typeof url !== 'string') return false;
-    const lowerCaseUrl = url.toLowerCase();
-    
-    if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || 
-        lowerCaseUrl.includes('pixeldrain.dev/api/file/') || 
-        lowerCaseUrl.includes('pixeldrain.net/api/file/') || 
-        lowerCaseUrl.includes('pixeldrain.biz/api/file/') || 
-        lowerCaseUrl.includes('pixeldrain.tech/api/file/') || 
-        lowerCaseUrl.includes('pixeldrain.nl/api/file/') || 
-        lowerCaseUrl.includes('pixeldra.in/api/file/')) {
-        return true;
-    }
-    
-    return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
-}
+        // ===== KEYBOARD SHORTCUTS =====
+        document.addEventListener('keydown', function(e) {
+            // Media controls for JW Player
+            if (modal.style.display === 'block' && player && typeof player.getState === 'function') {
+                if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+                    return;
+                }
+                
+                if (e.code === 'Space' && document.activeElement && document.activeElement.tagName === 'BUTTON') {
+                    return;
+                }
 
-function getOkVideoId(url) {
-    const match = url.match(/(?:\/video\/|\/videoembed\/)(\d+)/);
-    return match ? match[1] : null;
-}
+                switch(e.code) {
+                    case 'ArrowRight':
+                        e.preventDefault();
+                        player.seek(player.getPosition() + 10);
+                        break;
+                    case 'ArrowLeft':
+                        e.preventDefault();
+                        player.seek(Math.max(0, player.getPosition() - 10));
+                        break;
+                    case 'Space':
+                        e.preventDefault();
+                        if (player.getState() === 'playing') {
+                            player.pause();
+                        } else {
+                            player.play();
+                        }
+                        break;
+                }
+            }
+        });
 
-const createIframe = (link) => {
-    let iframeSrc = link;
-    if (link.includes('ok.ru')) {
-        const videoId = getOkVideoId(link);
-        iframeSrc = videoId ? `https://ok.ru/videoembed/${videoId}` : link;
-    }
-    return `<div class="embed-container"><iframe src="${iframeSrc}" frameborder="0" allowfullscreen></iframe></div>`;
-};
+        // ===== PAGE LOAD =====
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const movieId = urlParams.get('id');
+            if (movieId) {
+                loadMovieDetails(movieId);
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        });
 
-function renderPlayer(containerSelector, link, thumbnailUrl) {
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
-
-    if (player) {
-        try {
-            player.remove();
-        } catch (e) {
-            console.warn("Could not remove previous player instance:", e);
-        }
-        player = null;
-    }
-    if (jwSaveListener) {
-        window.removeEventListener('beforeunload', jwSaveListener);
-        jwSaveListener = null;
-    }
-    if (jwTimeInterval) {
-        clearInterval(jwTimeInterval);
-        jwTimeInterval = null;
-    }
-
-    if (isDirectVideoLink(link)) {
-        container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
-        
-        let sources = [];
-        const pixeldrainMatch = link.match(/pixeldra(in|\.com|\.dev|\.net|\.biz|\.tech|\.nl)\/api\/file\/([a-zA-Z0-9]+)/);
-
-        if (pixeldrainMatch && pixeldrainMatch[2]) {
-            const fileId = pixeldrainMatch[2];
-            sources = [
-                { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "HD" },
-                { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.dev" },
-                { file: `https://pixeldrain.net/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.net" },
-                { file: `https://pixeldrain.biz/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.biz" },
-                { file: `https://pixeldrain.tech/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.tech" },
-                { file: `https://pixeldrain.nl/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.nl" },
-                { file: `https://pixeldrain.com/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.com" },
-                { file: `https://pixeldra.in/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldra.in" }
-            ];
-        } else {
-            sources = [{
-                file: link,
-                type: 'video/mp4',
-                label: 'HD'
-            }];
+        // ===== NOTIFICATION SYSTEM =====
+        function showNotification(message, type = 'success') {
+            const notification = document.getElementById('notification');
+            const notificationText = document.getElementById('notificationText');
+            notificationText.textContent = message;
+            notification.className = `notification ${type} show`;
+            setTimeout(() => { notification.classList.remove('show'); }, 4000);
         }
 
-        try {
-            player = jwplayer("jwplayer-video");
-            player.setup({
-                sources: sources,
-                image: thumbnailUrl || "",
-                aspectratio: "16:9",
-                seeking: 10,
-                preload: "metadata",
-                autostart: false,
-                controls: true,
-                primary: "html5",
-                displaytitle: true,
-                cast: {},
-                playbackRateControls: false,
-                logo: {
-                    file: "https://i.ibb.co/S76vkgqv/flixify-jhtone-sote-removebg-preview.png",
-                    position: "top-left"
-                },
-                skin: {
-                    name: "flixify",
-                    active: "#ff0059",
-                    inactive: "#00f7ff",
-                    background: "rgba(0,0,0,0.8)"
-                },
-                advertising: {
-                    client: "vast",
-                    schedule: {}
-                },
-                captions: {},
-                tracks: []
-            });
+        // ===== LOAD MOVIE DETAILS =====
+        function loadMovieDetails(id) {
+            currentMovieId = id;
+            const modalBody = document.getElementById('modalBody');
+            modalBody.innerHTML = `<div class="loading"><div class="spinner"></div></div>`;
+            modal.style.display = 'block';
+            setTimeout(() => modal.classList.add('show'), 10);
+            
+            fetch(`${API_URL}?id=${id}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (!data) {
+                        throw new Error('No data received from server');
+                    }
+                    if (data.error) {
+                        showError(data.error);
+                        showNotification(`Error: ${data.error}`, 'error');
+                    } else {
+                        openMovieModal(data);
+                        showNotification('Movie loaded successfully!', 'success');
+                    }
+                })
+                .catch(error => {
+                    console.error('Fetch error:', error);
+                    showError(`Network error: ${error.message}`);
+                    showNotification('Failed to load movie', 'error');
+                });
+        }
 
-            player.addButton("./logomini.svg", "Powered By JH Movie Hub Team!", function() {
-                var win = window.open("https://prm.flixify.jhtone.site/", "_blank");
-                win.focus();
-            }, "Brand Logo");
+        // ===== VIDEO LINK VALIDATION =====
+        function isDirectVideoLink(url) {
+            if (typeof url !== 'string') return false;
+            const lowerCaseUrl = url.toLowerCase();
+            
+            if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || 
+                lowerCaseUrl.includes('pixeldrain.dev/api/file/') || 
+                lowerCaseUrl.includes('pixeldrain.net/api/file/') || 
+                lowerCaseUrl.includes('pixeldrain.biz/api/file/') || 
+                lowerCaseUrl.includes('pixeldrain.tech/api/file/') || 
+                lowerCaseUrl.includes('pixeldrain.nl/api/file/') || 
+                lowerCaseUrl.includes('pixeldra.in/api/file/')) {
+                return true;
+            }
+            
+            return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
+        }
 
-            player.on("setupError", function(event) {
-                console.log("Setup Error:", event);
-                showNotification("Player setup error. Please try again.", "error");
-            });
+        function getOkVideoId(url) {
+            const match = url.match(/(?:\/video\/|\/videoembed\/)(\d+)/);
+            return match ? match[1] : null;
+        }
 
-            player.on("error", function(event) {
-                console.log("Video Error:", event);
-                showNotification("Video playback error. Check link or try backup.", "error");
-            });
+        // ===== EMBED/IFRAME CREATION =====
+        const createIframe = (link) => {
+            let iframeSrc = link;
+            if (link.includes('ok.ru')) {
+                const videoId = getOkVideoId(link);
+                iframeSrc = videoId ? `https://ok.ru/videoembed/${videoId}` : link;
+            }
+            return `<div class="embed-container"><iframe src="${iframeSrc}" frameborder="0" allowfullscreen></iframe></div>`;
+        };
 
-            player.on("play", function() {
-                console.log("Video started playing");
-            });
+        // ===== PLAYER MANAGEMENT =====
+        function removePlayer() {
+            const container = document.querySelector('#embedPlayerContainer');
+            if (player) {
+                try {
+                    player.remove();
+                } catch (e) {
+                    console.warn("Could not remove previous player instance:", e);
+                }
+                player = null;
+            }
+            if (container) {
+                container.innerHTML = '';
+            }
+        }
 
-            player.on('ready', function() {
-                setTimeout(function() {
-                    const playerContainerSelector = '#jwplayer-video';
-                    const playerContainer = document.querySelector(playerContainerSelector);
-                    
-                    if (playerContainer) {
-                        const rewindContainer = playerContainer.querySelector('.jw-display-icon-rewind');
-                        if (rewindContainer) {
-                            const forwardContainer = rewindContainer.cloneNode(true);
-                            const forwardDisplayButton = forwardContainer.querySelector('.jw-icon-rewind');
-                            if (forwardDisplayButton) {
-                                forwardDisplayButton.style.transform = "scaleX(-1)";
-                                forwardDisplayButton.setAttribute('aria-label', 'Forward 10 Seconds');
-                                
-                                const nextContainer = playerContainer.querySelector('.jw-display-icon-next');
-                                if (nextContainer && nextContainer.parentNode) {
-                                    nextContainer.parentNode.insertBefore(forwardContainer, nextContainer);
-                                    
-                                    forwardDisplayButton.onclick = function() {
-                                        player.seek(player.getPosition() + 10);
-                                    };
+        function renderPlayer(containerSelector, link, thumbnailUrl) {
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+            
+            container.style.display = 'block'; 
+
+            if (player) {
+                try {
+                    player.remove();
+                } catch (e) {
+                    console.warn("Could not remove previous player instance:", e);
+                }
+                player = null;
+            }
+            
+            if (jwSaveListener) {
+                window.removeEventListener('beforeunload', jwSaveListener);
+                jwSaveListener = null;
+            }
+            
+            if (jwTimeInterval) {
+                clearInterval(jwTimeInterval);
+                jwTimeInterval = null;
+            }
+
+            if (isDirectVideoLink(link)) {
+                container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
+                
+                let sources = [];
+                const pixeldrainMatch = link.match(/pixeldra(in|\.com|\.dev|\.net|\.biz|\.tech|\.nl)\/api\/file\/([a-zA-Z0-9]+)/);
+
+                if (pixeldrainMatch && pixeldrainMatch[2]) {
+                    const fileId = pixeldrainMatch[2];
+                    sources = [
+                        { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "HD" },
+                        { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.dev" },
+                        { file: `https://pixeldrain.net/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.net" },
+                        { file: `https://pixeldrain.biz/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.biz" },
+                        { file: `https://pixeldrain.tech/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.tech" },
+                        { file: `https://pixeldrain.nl/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.nl" },
+                        { file: `https://pixeldrain.com/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.com" },
+                        { file: `https://pixeldra.in/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldra.in" }
+                    ];
+                } else {
+                    sources = [{
+                        file: link,
+                        type: 'video/mp4',
+                        label: 'HD'
+                    }];
+                }
+
+                try {
+                    player = jwplayer("jwplayer-video");
+                    player.setup({
+                        sources: sources,
+                        image: thumbnailUrl || "",
+                        aspectratio: "16:9",
+                        seeking: 10,
+                        preload: "metadata",
+                        autostart: false,
+                        controls: true,
+                        primary: "html5",
+                        displaytitle: true,
+                        cast: {},
+                        playbackRateControls: false,
+                        logo: {
+                            file: "https://i.ibb.co/S76vkgqv/flixify-jhtone-sote-removebg-preview.png",
+                            position: "top-left"
+                        },
+                        skin: {
+                            name: "flixify",
+                            active: "#ff0059",
+                            inactive: "#00f7ff",
+                            background: "rgba(0,0,0,0.8)"
+                        },
+                        advertising: {
+                            client: "vast",
+                            schedule: {}
+                        },
+                        captions: {},
+                        tracks: []
+                    });
+
+                    player.addButton("./logomini.svg", "Powered By JH Movie Hub Team!", function() {
+                        var win = window.open("https://prm.flixify.jhtone.site/", "_blank");
+                        win.focus();
+                    }, "Brand Logo");
+
+                    player.on("setupError", function(event) {
+                        console.log("Setup Error:", event);
+                        showNotification("Player setup error. Please try again.", "error");
+                    });
+
+                    player.on("error", function(event) {
+                        console.log("Video Error:", event);
+                        showNotification("Video playback error. Check link or try backup.", "error");
+                    });
+
+                    player.on("play", function() {
+                        console.log("Video started playing");
+                    });
+
+                    player.on('ready', function() {
+                        setTimeout(function() {
+                            const playerContainerSelector = '#jwplayer-video';
+                            const playerContainer = document.querySelector(playerContainerSelector);
+                            
+                            if (playerContainer) {
+                                const rewindContainer = playerContainer.querySelector('.jw-display-icon-rewind');
+                                if (rewindContainer) {
+                                    const forwardContainer = rewindContainer.cloneNode(true);
+                                    const forwardDisplayButton = forwardContainer.querySelector('.jw-icon-rewind');
+                                    if (forwardDisplayButton) {
+                                        forwardDisplayButton.style.transform = "scaleX(-1)";
+                                        forwardDisplayButton.setAttribute('aria-label', 'Forward 10 Seconds');
+                                        
+                                        const nextContainer = playerContainer.querySelector('.jw-display-icon-next');
+                                        if (nextContainer && nextContainer.parentNode) {
+                                            nextContainer.parentNode.insertBefore(forwardContainer, nextContainer);
+                                            
+                                            forwardDisplayButton.onclick = function() {
+                                                player.seek(player.getPosition() + 10);
+                                            };
+                                        }
+                                    }
+                                }
+
+                                const buttonContainer = playerContainer.querySelector('.jw-button-container');
+                                if (buttonContainer) {
+                                    const rewindControlBarButton = buttonContainer.querySelector(".jw-icon-rewind");
+                                    if (rewindControlBarButton) {
+                                        const forwardControlBarButton = rewindControlBarButton.cloneNode(true);
+                                        forwardControlBarButton.style.transform = "scaleX(-1)";
+                                        forwardControlBarButton.setAttribute('aria-label', 'Forward 10 Seconds');
+                                        
+                                        rewindControlBarButton.parentNode.insertBefore(forwardControlBarButton, rewindControlBarButton.nextElementSibling);
+                                        
+                                        forwardControlBarButton.onclick = function() {
+                                            player.seek(player.getPosition() + 10);
+                                        };
+                                    }
+                                }
+
+                                const nextButton = playerContainer.querySelector('.jw-display-icon-next');
+                                if (nextButton) {
+                                    nextButton.style.display = 'none';
                                 }
                             }
-                        }
+                        }, 1000);
+                    });
 
-                        const buttonContainer = playerContainer.querySelector('.jw-button-container');
-                        if (buttonContainer) {
-                            const rewindControlBarButton = buttonContainer.querySelector(".jw-icon-rewind");
-                            if (rewindControlBarButton) {
-                                const forwardControlBarButton = rewindControlBarButton.cloneNode(true);
-                                forwardControlBarButton.style.transform = "scaleX(-1)";
-                                forwardControlBarButton.setAttribute('aria-label', 'Forward 10 Seconds');
-                                
-                                rewindControlBarButton.parentNode.insertBefore(forwardControlBarButton, rewindControlBarButton.nextElementSibling);
-                                
-                                forwardControlBarButton.onclick = function() {
-                                    player.seek(player.getPosition() + 10);
-                                };
-                            }
-                        }
+                    window.player = player;
+                
+                } catch (err) {
+                    console.error("Failed to initialize JWPlayer:", err);
+                    container.innerHTML = `<div class="no-embed"><p>Error loading video player.</p></div>`;
+                    showNotification("Error loading video player.", "error");
+                }
 
-                        const nextButton = playerContainer.querySelector('.jw-display-icon-next');
-                        if (nextButton) {
-                            nextButton.style.display = 'none';
-                        }
-                    }
-                }, 1000);
-            });
-
-            window.player = player;
-        
-        } catch (err) {
-            console.error("Failed to initialize JWPlayer:", err);
-            container.innerHTML = `<div class="no-embed"><p>Error loading video player.</p></div>`;
-            showNotification("Error loading video player.", "error");
+            } else {
+                container.innerHTML = createIframe(link);
+            }
         }
 
-    } else {
-        container.innerHTML = createIframe(link);
-    }
-}
+        // ===== VLC POPUP FUNCTIONS =====
+        function showVlcPopup(streamLink) {
+            if (player && typeof player.pause === 'function') {
+                player.pause();
+            }
+            currentStreamingLink = streamLink;
+            document.getElementById('vlcLinkDisplay').textContent = streamLink;
+            vlcPopupModal.style.display = 'flex'; 
+            setTimeout(() => vlcPopupModal.classList.add('show'), 10);
+        }
 
-function openMovieModal(movie) {
+        function copyStreamLink() {
+            navigator.clipboard.writeText(currentStreamingLink)
+                .then(() => showNotification('Streaming link copied to clipboard!', 'success'))
+                .catch(err => {
+                    console.error('Failed to copy text: ', err);
+                    showNotification('Failed to copy link. Please copy manually.', 'error');
+                });
+        }
+
+        // ===== OPEN MOVIE MODAL =====
+        function openMovieModal(movie) {
     if (!movie) {
         showError('No movie data available');
         return;
@@ -1278,55 +1527,81 @@ function openMovieModal(movie) {
 
     let embedHtml = '';
     
+    // --- START: EMBED & DOWNLOAD LINKS GENERATION LOGIC (UNCHANGED CORE LOGIC) ---
+    
     if (movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
+        const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
+        const embedNames = movie.EMBED_NAME ? 
+            movie.EMBED_NAME.split(',').map(n => n ? n.trim() : '') : 
+            embedLinks.map((_, i) => `Server ${i + 1}`);
+
+        let episodeSelectorHtml = '';
+        
+        if (embedLinks.length >= 1) { 
+            let episodeOptions = embedNames.map((name, index) => 
+                `<option value="${index}" data-link="${embedLinks[index]}">${name || `Server ${index + 1}`}</option>`
+            ).join('');
+            episodeSelectorHtml = `
+                <div class="episode-selector">
+                    <span class="episode-label">Select :</span>
+                    <div class="custom-select-wrapper">
+                        <select class="episode-dropdown" id="episodeDropdown">${episodeOptions}</select>
+                    </div>
+                </div>`;
+        }
+        
+        const vlcInstructionText = `
+            <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 215, 0, 0.3); margin-bottom: 25px;">
+                <h4 style="color: #FFD700; margin-bottom: 10px; font-size: 1.3rem;">
+                    <i class="fas fa-volume-mute"></i> সাউন্ড সমস্যা সমাধান
+                </h4>
+                <p style="color: #FFD700; font-weight: 500; margin: 0; font-size: 1.1rem; line-height: 1.6;">
+                    যদি ভিডিওতে সাউন্ড না আসে, তাহলে নিচের <strong>'Get Streaming Link'</strong> বাটনে ক্লিক করুন।
+                </p>
+            </div>
+        `;
+        
+        const vlcTriggerButton = `
+             <button id="getStreamingLinkBtn" class="unlock-stream-btn" style="margin: 20px auto 0; padding: 15px 25px; background: linear-gradient(135deg, #00eeff, #00c0ff); color: #000; font-size: 1.1rem; animation: none;">
+                 <i class="fas fa-link"></i> Get Streming Link!
+             </button>
+        `;
+
         if (isFromPremiumSite) {
-            const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
-            const embedNames = movie.EMBED_NAME ? 
-                movie.EMBED_NAME.split(',').map(n => n ? n.trim() : '') : 
-                embedLinks.map((_, i) => `Server ${i + 1}`);
-            
-            let episodeSelectorHtml = '';
-            if (embedLinks.length > 1) {
-                let episodeOptions = embedNames.map((name, index) => 
-                    `<option value="${index}">${name || `Server ${index + 1}`}</option>`
-                ).join('');
-                episodeSelectorHtml = `
-                    <div class="episode-selector">
-                        <span class="episode-label">Select :</span>
-                        <div class="custom-select-wrapper">
-                            <select class="episode-dropdown" id="episodeDropdown">${episodeOptions}</select>
-                        </div>
-                    </div>`;
-            }
             embedHtml = `
                 <div class="embed-section">
                     <div class="modal-inner-padding">
-                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Watch Online</h3>
+                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
                         ${episodeSelectorHtml}
                     </div>
-                    <div id="embedPlayerContainer"></div>
+                    <div id="embedPlayerContainer" style="margin-top: 20px; min-height: 500px; padding: 0;"></div>
+                    <div class="modal-inner-padding" style="text-align: center;">
+                        ${vlcInstructionText}
+                        ${vlcTriggerButton}
+                    </div>
                 </div>`;
+                
         } else {
             embedHtml = `
                 <div class="embed-section">
                     <div class="modal-inner-padding">
-                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Watch Online</h3>
+                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
                         <div class="premium-message">
                             <p><strong>⚠️ Only premium users can watch this video. ⚠️</strong></p>
                             <p>To unlock video streaming, please upgrade to a premium account.</p>
-                            <button onclick="window.open('${premiumPurchaseUrl}', '_blank')" class="unlock-stream-btn"><i class="fas fa-crown"></i> Buy Premium</button>
+                            <button onclick="window.open('${premiumPurchaseUrl}', '_blank')" class="unlock-stream-btn" style="margin-top: 30px;"><i class="fas fa-crown"></i> Buy Premium</button>
                         </div>
                     </div>
                 </div>`;
         }
     } else {
          embedHtml = `
-            <div class="embed-section">
-                <div class="modal-inner-padding">
-                    <h3 class="section-title"><i class="fas fa-play-circle"></i> Watch Online</h3>
-                    <div class="no-embed"><p>No streaming link available.</p></div>
-                </div>
-            </div>`;
+             <div class="embed-section">
+                 <div class="modal-inner-padding">
+                     <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
+                     <div class="no-embed"><p>No streaming link available.</p></div>
+                 </div>
+             </div>`;
     }
     
     let downloadLinksHtml = '';
@@ -1339,22 +1614,19 @@ function openMovieModal(movie) {
         const names = movie.LINK_NAME.split(',').map(name => name ? name.trim() : '');
         const episodeGroups = {};
         
-        // Filter episodes based on user type
         names.forEach((name, index) => {
             const episodeName = name || `Download ${index + 1}`;
             const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
-                                   episodeName.toLowerCase().includes('premium');
+                                           episodeName.toLowerCase().includes('premium');
             const isWithAds = episodeName.toLowerCase().includes('with ads') || 
-                             episodeName.toLowerCase().includes('ads');
+                                           episodeName.toLowerCase().includes('ads');
             
-            // Hide [Premium] episodes from free users
             if (!isFromPremiumSite && isPremiumEpisode) {
-                return; // Skip this episode for free users
+                return; 
             }
             
-            // Hide "With Ads" episodes from premium users
             if (isFromPremiumSite && isWithAds) {
-                return; // Skip this episode for premium users
+                return; 
             }
             
             if (!episodeGroups[episodeName]) episodeGroups[episodeName] = [];
@@ -1372,7 +1644,7 @@ function openMovieModal(movie) {
             let qualityClass = '';
             let subText = '';
             const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
-                                   episodeName.toLowerCase().includes('premium');
+                                           episodeName.toLowerCase().includes('premium');
             
             if (episodeName.toLowerCase().includes('telegram')) {
                 episodeEmoji = '🚀';
@@ -1402,39 +1674,43 @@ function openMovieModal(movie) {
             const qualityLinks = qualities.map(q => {
                 const isNotWorking = q.link && q.link.trim().startsWith('#');
                 const is1080p = episodeName.toLowerCase().includes('1080p');
-                const isWithAds = episodeName.toLowerCase().includes('with ads') || 
-                                 episodeName.toLowerCase().includes('ads');
-                const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
-                                       episodeName.toLowerCase().includes('premium');
+                const isPremiumEpisodeLink = episodeName.toLowerCase().includes('[premium]') || episodeName.toLowerCase().includes('premium');
                 
-                // Check button unlock status
                 let isThisButtonUnlocked;
-                
-                if (isPremiumEpisode) {
-                    // Premium episodes are only visible to premium users (filtered above)
-                    isThisButtonUnlocked = isFromPremiumSite;
-                } else if (is1080p) {
-                    // 1080p buttons require premium
-                    isThisButtonUnlocked = isFromPremiumSite;
-                } else if (isFromPremiumSite) {
-                    // Premium users see all non-premium, non-1080p buttons unlocked
-                    isThisButtonUnlocked = true;
-                } else if (isWithAds) {
-                    // Free users need to unlock "With Ads" buttons individually
-                    const buttonKey = `unlocked_${btoa(q.link).slice(0, 16)}`;
-                    isThisButtonUnlocked = sessionStorage.getItem(buttonKey) === 'true';
-                } else {
-                    // Regular non-ads buttons for free users
-                    isThisButtonUnlocked = true;
-                }
 
-                const buttonClass = isThisButtonUnlocked ? 'download-btn' : 'download-btn locked-btn';
-                const buttonIcon = isThisButtonUnlocked ? 'fas fa-download' : 'fas fa-lock';
-                const buttonText = isThisButtonUnlocked ? 'Download Now' : 
-                                 (is1080p ? 'Premium Only' : 
-                                  (isPremiumEpisode ? 'Premium Only' : 'Unlock Access'));
-                const premiumAttribute = (is1080p || isPremiumEpisode) ? 'data-premium="true"' : '';
+                if (isFromPremiumSite) {
+                    isThisButtonUnlocked = true;
+                } else {
+                    isThisButtonUnlocked = false; 
+                    
+                    if (is1080p || isPremiumEpisodeLink) {
+                           isThisButtonUnlocked = false;
+                    } else {
+                        const buttonIdCheck = `btn_${btoa(q.link).slice(0, 16)}`;
+                        if (sessionStorage.getItem(buttonIdCheck) === 'true') {
+                            isThisButtonUnlocked = true;
+                        }
+                    }
+                }
+                
                 const buttonId = `btn_${btoa(q.link).slice(0, 16)}`;
+                
+                let buttonText, buttonIcon, premiumAttribute = '';
+                
+                if (isThisButtonUnlocked) {
+                    buttonText = 'Download Now';
+                    buttonIcon = 'fas fa-download';
+                } else if (is1080p || isPremiumEpisodeLink) {
+                    buttonText = 'Premium Only';
+                    buttonIcon = 'fas fa-lock';
+                    premiumAttribute = 'data-premium="true"';
+                } else {
+                    buttonText = 'Unlock Access';
+                    buttonIcon = 'fas fa-lock';
+                }
+                
+                const buttonClass = isThisButtonUnlocked ? 'download-btn' : 'download-btn locked-btn';
+                
                 
                 let qualityDisplayHtml = '';
                 if (episodeName.toLowerCase().includes('telegram')) {
@@ -1520,7 +1796,7 @@ function openMovieModal(movie) {
                             <span class="server-badge">Backup</span>
                         </div>
                     `;
-                } else if (isPremiumEpisode) {
+                } else if (isPremiumEpisodeLink) {
                     qualityDisplayHtml = `
                         <div class="download-option-highlight premium">
                             <span class="emoji">👑</span>
@@ -1567,11 +1843,11 @@ function openMovieModal(movie) {
                 } else {
                     const buttonHtml = `<a href="#" id="${buttonId}" data-download-url="${q.link}" class="${buttonClass}" ${premiumAttribute}><i class="${buttonIcon}"></i> ${buttonText}</a>`;
                     
-                    if (!isThisButtonUnlocked && (is1080p || isPremiumEpisode)) {
+                    if (!isThisButtonUnlocked && (is1080p || isPremiumEpisodeLink)) {
                         linkContent = `
                             <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
                                 <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 8px; color: var(--accent-red); font-weight: 500; font-size: 0.8rem; font-style: italic;">
-                                   <i class="fas fa-crown" style="font-size: 0.7rem;"></i> Premium Exclusive Content
+                                    <i class="fas fa-crown" style="font-size: 0.7rem;"></i> Premium Exclusive Content
                                 </span>
                                 ${buttonHtml}
                             </div>
@@ -1601,7 +1877,10 @@ function openMovieModal(movie) {
     } else {
         downloadLinksHtml = '<div class="no-download"><p>No download links available.</p></div>';
     }
+
+    // --- END: EMBED & DOWNLOAD LINKS GENERATION LOGIC ---
     
+    // Set the modal content
     modalBody.innerHTML = `
         <div class="modal-inner-padding"> 
             <div class="download-warning">⚠️ নিচের যে কোনো লিংক থেকে ডাউনলোড করুন। একটি কাজ না করলে অন্য লিংক ব্যবহার করুন। ⚠️</div>
@@ -1621,22 +1900,54 @@ function openMovieModal(movie) {
             </div>
         </div>`;
     
+    // 👑 নতুন এবং সবচেয়ে গুরুত্বপূর্ণ কোড: মুভি লোড হওয়ার পরে ব্যাকগ্রাউন্ডে ভিউ কাউন্ট আপডেট করুন
+    if (movie.ID) {
+        console.log(`Movie ID ${movie.ID} loaded. Triggering background view count update.`);
+        
+        // ⚡️ নতুন, নন-ব্লকিং API কল: Fast Read সম্পন্ন হওয়ার পর Slow Write শুরু হবে
+        fetch(`${API_URL}?action=updateView&id=${movie.ID}`, { 
+            method: 'GET', // GET method is standard for external script execution
+            cache: 'no-cache'
+        })
+        .then(response => {
+            if (response.ok) {
+                console.log('View count update triggered successfully (background task).');
+            } else {
+                console.warn('Failed to trigger view count update.');
+            }
+        })
+        .catch(err => console.error('Error during view count update:', err));
+    }
+    
+    // --- START: PLAYER AND EVENT LISTENERS SETUP LOGIC (UNCHANGED CORE LOGIC) ---
+    
     if (isFromPremiumSite && movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
         const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
-        if (embedLinks[0]) {
-            renderPlayer('#embedPlayerContainer', embedLinks[0], movie.THUMBNAIL_URL);
-            const episodeDropdown = modalBody.querySelector('#episodeDropdown');
-            if (episodeDropdown) {
-                episodeDropdown.addEventListener('change', function() {
-                    const selectedLink = embedLinks[this.value];
-                    if (selectedLink) {
-                        renderPlayer('#embedPlayerContainer', selectedLink, movie.THUMBNAIL_URL);
-                    }
-                });
+        const episodeDropdown = modalBody.querySelector('#episodeDropdown');
+        const getStreamingLinkBtn = modalBody.querySelector('#getStreamingLinkBtn');
+        
+        const updatePlayerAndButton = () => {
+            if (embedLinks.length > 0) {
+                const selectedIndex = episodeDropdown ? episodeDropdown.value : 0;
+                const selectedOption = episodeDropdown ? episodeDropdown.options[selectedIndex] : null;
+                const link = embedLinks[selectedIndex];
+                const name = selectedOption ? selectedOption.textContent : 'Streaming Server';
+                
+                renderPlayer('#embedPlayerContainer', link, movie.THUMBNAIL_URL); 
+                
+                if (getStreamingLinkBtn) {
+                    getStreamingLinkBtn.onclick = () => showVlcPopup(link);
+                }
             }
-        }
-    }
+        };
 
+        if (episodeDropdown) {
+            episodeDropdown.addEventListener('change', updatePlayerAndButton);
+        }
+        
+        updatePlayerAndButton();
+    }
+    
     const episodeItems = modalBody.querySelectorAll('.episode-item');
     episodeItems.forEach(item => {
         const header = item.querySelector('.episode-header');
@@ -1648,99 +1959,107 @@ function openMovieModal(movie) {
             });
         }
     });
+    // --- END: PLAYER AND EVENT LISTENERS SETUP LOGIC ---
 }
 
-function showError(error) {
-    document.getElementById('modalBody').innerHTML = `<div class="modal-inner-padding"><h2 class="movie-title">Error</h2><p class="movie-description">${error}</p></div>`;
-}
-
-document.addEventListener('click', e => {
-    const downloadBtn = e.target.closest('.download-btn');
-    if (downloadBtn) {
-        e.preventDefault();
-        if (!downloadBtn.dataset.downloadUrl) return;
-
-        const isPremiumButton = downloadBtn.dataset.premium === 'true';
-        const buttonId = downloadBtn.id;
-        const downloadUrl = downloadBtn.dataset.downloadUrl;
-        const is1080p = downloadUrl.toLowerCase().includes('1080p') || 
-                       (downloadBtn.closest('.episode-item') && 
-                        downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('1080p'));
-        const isPremiumEpisode = downloadBtn.closest('.episode-item') && 
-                               downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('[premium]');
-        
-        if (isPremiumButton || is1080p || isPremiumEpisode) {
-            // This is a premium button (1080p or [Premium])
-            if (isFromPremiumSite) {
-                window.open(downloadUrl, '_blank');
-            } else {
-                window.open(premiumPurchaseUrl, '_blank');
-            }
-        } else {
-            // This is a regular button
-            if (downloadBtn.classList.contains('locked-btn')) {
-                // Show ad for this specific button only
-                window.open(downloadUnlockUrl, '_blank');
-                
-                // Mark this specific button as unlocked in sessionStorage
-                sessionStorage.setItem(buttonId, 'true');
-                
-                // Update ONLY this button
-                downloadBtn.classList.remove('locked-btn');
-                downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Now';
-                downloadBtn.href = downloadUrl;
-                downloadBtn.target = "_blank";
-            } else {
-                // Button is already unlocked
-                window.open(downloadUrl, '_blank');
-            }
+        // ===== ERROR HANDLING =====
+        function showError(error) {
+            document.getElementById('modalBody').innerHTML = `
+                <div class="modal-inner-padding">
+                    <h2 class="movie-title">Error</h2>
+                    <p class="movie-description">${error}</p>
+                </div>`;
         }
-    }
-});
 
-document.addEventListener('keydown', e => { 
-    if (modal.style.display === 'block' && e.key === 'Escape') e.preventDefault(); 
-});
+        // ===== DOWNLOAD BUTTON HANDLER =====
+        document.addEventListener('click', e => {
+            const downloadBtn = e.target.closest('.download-btn');
+            if (downloadBtn) {
+                e.preventDefault();
+                if (!downloadBtn.dataset.downloadUrl) return;
 
-document.addEventListener('contextmenu', e => e.preventDefault());
+                const isPremiumButton = downloadBtn.dataset.premium === 'true';
+                const buttonId = downloadBtn.id;
+                const downloadUrl = downloadBtn.dataset.downloadUrl;
+                const is1080p = downloadUrl.toLowerCase().includes('1080p') || 
+                               (downloadBtn.closest('.episode-item') && 
+                                downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('1080p'));
+                const isPremiumEpisode = downloadBtn.closest('.episode-item') && 
+                                       downloadBtn.closest('.episode-item').querySelector('.episode-main-text').textContent.toLowerCase().includes('[premium]');
+                
+                if (isPremiumButton || is1080p || isPremiumEpisode) {
+                    if (isFromPremiumSite) {
+                        window.open(downloadUrl, '_blank');
+                    } else {
+                        window.open(premiumPurchaseUrl, '_blank');
+                    }
+                } else {
+                    if (downloadBtn.classList.contains('locked-btn')) {
+                        window.open(downloadUnlockUrl, '_blank');
+                        sessionStorage.setItem(buttonId, 'true');
+                        downloadBtn.classList.remove('locked-btn');
+                        downloadBtn.innerHTML = '<i class="fas fa-download"></i> Download Now';
+                        downloadBtn.href = downloadUrl;
+                        downloadBtn.target = "_blank";
+                    } else {
+                        window.open(downloadUrl, '_blank');
+                    }
+                }
+            }
+        });
 
-document.onkeydown = e => {
-    if (e.keyCode === 123 || 
-        (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) || 
-        (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 65))) {
-        if (['ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
-            return true;
-        }
-        return false;
-    }
-};
+        // ===== KEYBOARD SHORTCUTS FOR MODALS =====
+        document.addEventListener('keydown', e => { 
+            if (vlcPopupModal.style.display === 'flex' && e.key === 'Escape') {
+                e.preventDefault();
+                closeModal('vlcPopupModal');
+                return;
+            }
+            
+            if (modal.style.display === 'block' && e.key === 'Escape') {
+                e.preventDefault();
+                closeModal('movieModal');
+                return;
+            }
+        });
+
+        // ===== SECURITY MEASURES =====
+        document.addEventListener('contextmenu', e => e.preventDefault());
+
+        document.onkeydown = e => {
+            if (e.keyCode === 123 || 
+                (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 67 || e.keyCode === 74)) || 
+                (e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 65))) {
+                if (['ArrowLeft', 'ArrowRight', 'Space'].includes(e.code)) {
+                    return true;
+                }
+                return false;
+            }
+        };
     </script>
     
+    <!-- ===== URL CLEANUP SCRIPT ===== -->
     <script>
-    (function(){
-        let url = window.location.toString();
-        const paramsToRemove = ["%3D", "&m=1", "?m=1"];
-        paramsToRemove.forEach(param => { if(url.includes(param)) url = url.substring(0, url.indexOf(param)); });
-        if(window.location.toString() !== url) window.history.replaceState({}, document.title, url);
-    })();
+        (function(){
+            let url = window.location.toString();
+            const paramsToRemove = ["%3D", "&m=1", "?m=1"];
+            paramsToRemove.forEach(param => { 
+                if(url.includes(param)) url = url.substring(0, url.indexOf(param)); 
+            });
+            if(window.location.toString() !== url) window.history.replaceState({}, document.title, url);
+        })();
     </script>
 
-    <a href="https://t.me/flixify_official_group" target="_blank" class="telegram-float">
-        <div class="telegram-icon">
-            <svg viewBox="0 0 64 64"><path d="M56.4,8.2l-51.2,20c-1.7,0.6-1.6,3,0.1,3.5l9.7,2.9c2.1,0.6,3.8,2.2,4.4,4.3l3.8,12.1c0.5,1.6,2.5,2.1,3.7,0.9 l5.2-5.3c0.9-0.9,2.2-1,3.2-0.3l11.5,8.4c1.6,1.2,3.9,0.3,4.3-1.7l8.7-41.8C60.4,9.1,58.4,7.4,56.4,8.2z M50,17.4L29.4,35.6 c-1.1,1-1.9,2.4-2,3.9c-0.2,1.5-2.3,1.7-2.8,0.3l-0.9-3c-0.7-2.2,0.2-4.5,2.1-5.7l23.5-14.6C49.9,16.1,50.5,16.9,50,17.4z"></path></svg>
-        </div>
-    </a>
-
+    <!-- ===== AD SCRIPT ===== -->
     <script>
-      (function() {
-        // এই কোডটিও আপডেট করা হয়েছে
-        if (!adminReferrers.some(referrer => document.referrer.startsWith(referrer))) {
-         var script = document.createElement('script');
-         script.type = 'text/javascript';
-         script.src = '//wildestgraciousunpack.com/03/4c/3b/034c3bbbee8360b5f93ad5decc133f2f.js';
-         document.body.appendChild(script);
-        }
-      })();
+        (function() {
+            if (!adminReferrers.some(referrer => document.referrer.startsWith(referrer))) {
+                var script = document.createElement('script');
+                script.type = 'text/javascript';
+                script.src = '//wildestgraciousunpack.com/03/4c/3b/034c3bbbee8360b5f93ad5decc133f2f.js';
+                document.body.appendChild(script);
+            }
+        })();
     </script>
 </body>
 </html>
