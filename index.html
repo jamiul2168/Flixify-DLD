@@ -1195,9 +1195,8 @@ function renderPlayer(containerSelector, link, thumbnailUrl) {
         
         try {
             player = jwplayer("jwplayer-video");
-            player.setup({
-                file: link, 
-                type: 'mp4', // 🔥 এটি সবথেকে গুরুত্বপূর্ণ, এটি না দিলে প্লে হবে না
+            file: link, // যেমন: https://flixify-stream.jhprm01.workers.dev/stream?id=...
+    type: 'mp4', // 🔥 এটি না দিলে প্লেয়ার ভিডিও ফাইল চিনতে পারবে না
                 image: thumbnailUrl || "",
                 aspectratio: "16:9",
                 autostart: true,
@@ -1744,5 +1743,6 @@ function renderPlayer(containerSelector, link, thumbnailUrl) {
     </script>
 </body>
 </html>
+
 
 
