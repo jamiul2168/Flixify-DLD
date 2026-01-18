@@ -1346,14 +1346,14 @@ function isDirectVideoLink(url) {
         
         try {
             player = jwplayer("jwplayer-video");
-            player.setup({
-                file: link, // এখানে আপনার প্রক্সি /stream?id=... লিঙ্কটি কাজ করবে
-                type: 'video/mp4',
-                image: thumbnailUrl || "",
-                aspectratio: "16:9",
-                autostart: false,
-                controls: true,
-                primary: "html5",
+player.setup({
+    file: link,
+    type: 'video/mp4',
+    image: thumbnailUrl || "",
+    aspectratio: "16:9",
+    autostart: false,
+    controls: true,
+    primary: "html5"
                 logo: {
                     file: "https://drive.google.com/thumbnail?id=1otiMKTEhxQZe2xxQDs0-KShH9hNJlrjF&sz=w1000",
                     position: "top-left"
@@ -1942,5 +1942,6 @@ function isDirectVideoLink(url) {
     </script>
 </body>
 </html>
+
 
 
