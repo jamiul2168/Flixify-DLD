@@ -1009,47 +1009,6 @@
                 margin-top: 10px !important;
                 margin-bottom: 10px !important;
             }
-            
-            /* VLC Modal mobile adjustments */
-            #vlcPopupModal .modal-content {
-                padding: 20px 15px !important;
-                max-width: 95% !important;
-            }
-
-            #vlcLinkDisplay {
-                font-size: 0.85rem !important;
-                padding: 10px !important;
-            }
-
-            .vlc-row {
-                display: flex;
-                align-items: center;
-                gap: 10px;
-                margin: 15px 0;
-                flex-wrap: nowrap;
-                overflow: hidden;
-            }
-
-            .vlc-row button {
-                padding: 10px 15px !important;
-                font-size: 0.9rem !important;
-                white-space: nowrap;
-            }
-
-            .vlc-row #vlcLinkDisplay {
-                flex: 1;
-                margin: 0;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-            }
-
-            .vlc-download-btn {
-                width: 100%;
-                margin: 5px 0 !important;
-                padding: 12px 0 !important;
-                font-size: 0.95rem !important;
-            }
         }
     </style>
 </head>
@@ -1077,70 +1036,6 @@
         </div>
     </div>
     
-    <!-- ===== VLC POPUP MODAL ===== -->
-    <div id="vlcPopupModal" class="modal">
-        <div class="modal-content" onclick="event.stopPropagation()" style="max-width: 700px; padding: 50px 30px;">
-            <button class="close-btn" onclick="closeModal('vlcPopupModal')">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <div class="modal-inner-padding" style="text-align: center; padding: 0 20px;">
-                <h2 class="movie-title" style="font-size: 2rem; margin-bottom: 15px;">
-                    🔗 Sound Problem Solve Guide! 🔗
-                </h2>
-
-                <p class="movie-description" id="vlcPopupMessage" 
-                   style="margin-top: 0; font-weight: 500; color: #FFD700;
-                   max-width: none; font-size: 1.2rem; line-height: 1.5;">
-                    যদি ভিডিওতে সাউন্ড না আসে, তাহলে নিচে কপি আইকোনে ক্লিক করে লিংকটি কপি করুন। এরপর আপনার ডিভাইস অনুযায়ী বাটনে ক্লিক পরবর্তী গাইড লাইন অনুসরণ করুন।  
-                    অবশ্যই আপনার ফোনে (MX Player) বা পিসিতে (VLC Player) ইন্সটল থাকতে হবে।
-                </p>
-
-                <!-- LINK + COPY BUTTON -->
-                <div style="display: flex; align-items: center; gap: 10px; margin: 25px 0; width: 100%;">
-                    <div id="vlcLinkDisplay" 
-                        style="flex: 1; padding: 12px; background: rgba(255,255,255,0.1); 
-                        border-radius: 10px; font-family: monospace; font-size: 0.95rem; 
-                        color: var(--accent); white-space: nowrap; overflow: hidden; 
-                        text-overflow: ellipsis; user-select: none;">
-                    </div>
-                    
-                    <button onclick="copyStreamLink()" 
-                        style="padding: 12px 15px; background: linear-gradient(135deg, #00eeff, #00c0ff); 
-                        color: #000; border-radius: 8px; border: none; cursor: pointer;">
-                        <i class="fas fa-copy"></i>
-                    </button>
-                </div>
-
-                <!-- VLC DOWNLOAD BUTTONS -->
-                <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
-                    <a href="https://jhittech.jhtone.site/2025/12/play-online-video-with-vlc.html" 
-                       target="_blank" 
-                       class="download-btn" 
-                       style="padding: 15px 30px;">
-                        <i class="fas fa-desktop"></i> PC Tutorial (VLC Player)!
-                    </a>
-
-                    <a href="https://jhittech.jhtone.site/2025/12/play-online-video-with-vlc.html" 
-                       target="_blank" 
-                       class="download-btn" 
-                       style="padding: 15px 30px;">
-                        <i class="fas fa-mobile-alt"></i> Mobile Tutorial (MX Player)!
-                    </a>
-                </div>
-
-                
-
-                <button onclick="closeModal('vlcPopupModal')" 
-                    class="download-btn" 
-                    style="background: rgba(255,255,255,0.1); color: var(--text); 
-                    border: 1px solid var(--glass-edge); margin-top: 30px;">
-                    <i class="fas fa-times"></i> Close
-                </button>
-            </div>
-        </div>
-    </div>
-    
     <!-- ===== NOTIFICATION ===== -->
     <div id="notification" class="notification">
         <span id="notificationText"></span>
@@ -1165,10 +1060,8 @@
         // ===== GLOBAL VARIABLES =====
         const API_URL = 'https://script.google.com/macros/s/AKfycbygyIww9tzNT3Pga-ghd5tvnQhDPuunwJCNNJNx2Fkvbj4SSsYgbgFbYV3LE09YBYl0/exec';
         const modal = document.getElementById('movieModal');
-        const vlcPopupModal = document.getElementById('vlcPopupModal'); 
         let player = null;
         let currentMovieId = null;
-        let currentStreamingLink = ''; 
         const downloadUnlockUrl = 'https://contractexcitedly.com/a10riqnm?key=562bf326fa21da046160a7c816701951';
         const premiumPurchaseUrl = 'https://offer.prm.flixify.jhtone.site/';
         const adminReferrers = ['https://prm.flixify.jhtone.site/', 'https://prm.flixify.18plus.jhtone.site/'];
@@ -1185,13 +1078,6 @@
                 setTimeout(() => targetModal.style.display = 'none', 400);
             }
         }
-
-        // Global click handler for closing modal on backdrop click
-        document.addEventListener('click', function(event) {
-            if (event.target.id === 'vlcPopupModal') {
-                closeModal('vlcPopupModal');
-            }
-        });
 
         // ===== KEYBOARD SHORTCUTS =====
         document.addEventListener('keydown', function(e) {
@@ -1280,19 +1166,17 @@
         }
 
         // ===== VIDEO LINK VALIDATION =====
-        // আপনার প্রক্সি লিঙ্ক এবং ডাইরেক্ট ভিডিও লিঙ্ক শনাক্ত করার ফাংশন
-function isDirectVideoLink(url) {
-    if (typeof url !== 'string') return false;
-    const lowerCaseUrl = url.toLowerCase();
-    
-    // আপনার ক্লাউডফ্লেয়ার ওয়ার্কারের স্ট্রিমিং এন্ডপয়েন্ট বা প্রক্সি লিঙ্ক চেক
-    if (lowerCaseUrl.includes('/stream?id=') || lowerCaseUrl.includes('workers.dev/stream')) {
-        return true;
-    }
-    
-    // সাধারণ ভিডিও ফরম্যাট চেক
-    return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
-}
+        function isDirectVideoLink(url) {
+            if (typeof url !== 'string') return false;
+            const lowerCaseUrl = url.toLowerCase();
+            
+            if (lowerCaseUrl.includes('/stream?id=') || lowerCaseUrl.includes('workers.dev/stream')) {
+                return true;
+            }
+            
+            return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
+        }
+
         function getOkVideoId(url) {
             const match = url.match(/(?:\/video\/|\/videoembed\/)(\d+)/);
             return match ? match[1] : null;
@@ -1325,517 +1209,465 @@ function isDirectVideoLink(url) {
         }
 
         function renderPlayer(containerSelector, link, thumbnailUrl) {
-    const container = document.querySelector(containerSelector);
-    if (!container) return;
-    
-    container.style.display = 'block'; 
+            const container = document.querySelector(containerSelector);
+            if (!container) return;
+            
+            container.style.display = 'block'; 
 
-    if (player) {
-        try {
-            player.remove();
-        } catch (e) {
-            console.warn("Player removal warning:", e);
-        }
-        player = null;
-    }
-
-    if (isDirectVideoLink(link)) {
-        container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
-        
-        try {
-            player = jwplayer("jwplayer-video");
-            player.setup({
-                file: link,
-                type: 'video/mp4',
-                image: thumbnailUrl || "",
-                aspectratio: "16:9",
-                autostart: false, // এখানে false করে দিলে ইউজার ক্লিক না করা পর্যন্ত ভিডিও চলবে না
-                controls: true,
-                primary: "html5",
-                logo: {
-                    file: "https://drive.google.com/thumbnail?id=1otiMKTEhxQZe2xxQDs0-KShH9hNJlrjF&sz=w1000",
-                    position: "top-left"
-                },
-                skin: {
-                    name: "flixify",
-                    active: "#ff0059",
-                    inactive: "#00f7ff",
-                    background: "rgba(0,0,0,0.8)"
+            if (player) {
+                try {
+                    player.remove();
+                } catch (e) {
+                    console.warn("Player removal warning:", e);
                 }
-            });
+                player = null;
+            }
 
-            player.addButton(
-                "https://cdn-icons-png.flaticon.com/512/727/727245.png",
-                "Sound Problem? Use VLC",
-                function() {
-                    showVlcPopup(link);
-                },
-                "vlcButton"
-            );
+            if (isDirectVideoLink(link)) {
+                container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
+                
+                try {
+                    player = jwplayer("jwplayer-video");
+                    player.setup({
+                        file: link,
+                        type: 'video/mp4',
+                        image: thumbnailUrl || "",
+                        aspectratio: "16:9",
+                        autostart: false,
+                        controls: true,
+                        primary: "html5",
+                        logo: {
+                            file: "https://drive.google.com/thumbnail?id=1otiMKTEhxQZe2xxQDs0-KShH9hNJlrjF&sz=w1000",
+                            position: "top-left"
+                        },
+                        skin: {
+                            name: "flixify",
+                            active: "#ff0059",
+                            inactive: "#00f7ff",
+                            background: "rgba(0,0,0,0.8)"
+                        }
+                    });
 
-        } catch (err) {
-            console.error("JWPlayer initialization failed:", err);
-            container.innerHTML = `<div class="no-embed"><p>Error loading premium player.</p></div>`;
+                } catch (err) {
+                    console.error("JWPlayer initialization failed:", err);
+                    container.innerHTML = `<div class="no-embed"><p>Error loading premium player.</p></div>`;
+                }
+            } else {
+                container.innerHTML = createIframe(link);
+            }
         }
-    } else {
-        container.innerHTML = createIframe(link);
-    }
-}
        
         // ===== OPEN MOVIE MODAL =====
         function openMovieModal(movie) {
-    if (!movie) {
-        showError('No movie data available');
-        return;
-    }
+            if (!movie) {
+                showError('No movie data available');
+                return;
+            }
 
-    const modalBody = document.getElementById('modalBody');
-    const welcomeMessage = document.getElementById('welcomeMessage');
-    if (welcomeMessage) {
-        welcomeMessage.style.display = 'none';
-    }
+            const modalBody = document.getElementById('modalBody');
+            const welcomeMessage = document.getElementById('welcomeMessage');
+            if (welcomeMessage) {
+                welcomeMessage.style.display = 'none';
+            }
 
-    let embedHtml = '';
-    
-    // --- START: EMBED & DOWNLOAD LINKS GENERATION LOGIC (UNCHANGED CORE LOGIC) ---
-    
-    if (movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
-        const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
-        const embedNames = movie.EMBED_NAME ? 
-            movie.EMBED_NAME.split(',').map(n => n ? n.trim() : '') : 
-            embedLinks.map((_, i) => `Server ${i + 1}`);
+            let embedHtml = '';
+            
+            if (movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
+                const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
+                const embedNames = movie.EMBED_NAME ? 
+                    movie.EMBED_NAME.split(',').map(n => n ? n.trim() : '') : 
+                    embedLinks.map((_, i) => `Server ${i + 1}`);
 
-        let episodeSelectorHtml = '';
-        
-        if (embedLinks.length >= 1) { 
-            let episodeOptions = embedNames.map((name, index) => 
-                `<option value="${index}" data-link="${embedLinks[index]}">${name || `Server ${index + 1}`}</option>`
-            ).join('');
-            episodeSelectorHtml = `
-                <div class="episode-selector">
-                    <span class="episode-label">Select :</span>
-                    <div class="custom-select-wrapper">
-                        <select class="episode-dropdown" id="episodeDropdown">${episodeOptions}</select>
-                    </div>
-                </div>`;
-        }
-        
-     const vlcInstructionText = `
-     <!--
-            <div style="background: rgba(255, 215, 0, 0.1); padding: 20px; border-radius: 15px; border: 1px solid rgba(255, 215, 0, 0.3); margin-bottom: 25px;">
-                <h4 style="color: #FFD700; margin-bottom: 10px; font-size: 1.3rem;">
-                    <i class="fas fa-volume-mute"></i> সাউন্ড সমস্যা সমাধান
-                </h4>
-                <p style="color: #FFD700; font-weight: 500; margin: 0; font-size: 1.1rem; line-height: 1.6;">
-                    যদি ভিডিওতে সাউন্ড না আসে, তাহলে নিচের <strong>'Get Streaming Link'</strong> বাটনে ক্লিক করুন।
-                </p>
-            </div>
-            -->
-        `;
-        
-        const vlcTriggerButton = `
-        <!--
-             <button id="getStreamingLinkBtn" class="unlock-stream-btn" style="margin: 20px auto 0; padding: 15px 25px; background: linear-gradient(135deg, #00eeff, #00c0ff); color: #000; font-size: 1.1rem; animation: none;">
-                 <i class="fas fa-link"></i> Get Streming Link!
-             </button>
-             -->
-        `;
-
-
-        if (isFromPremiumSite) {
-            embedHtml = `
-                <div class="embed-section">
-                    <div class="modal-inner-padding">
-                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
-                        ${episodeSelectorHtml}
-                    </div>
-                    <div id="embedPlayerContainer" style="margin-top: 20px; min-height: 500px; padding: 0;"></div>
-                    <div class="modal-inner-padding" style="text-align: center;">
-                        ${vlcInstructionText}
-                        ${vlcTriggerButton}
-                    </div>
-                </div>`;
+                let episodeSelectorHtml = '';
                 
-        } else {
-            embedHtml = `
-                <div class="embed-section">
-                    <div class="modal-inner-padding">
-                        <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
-                        <div class="premium-message">
-                            <p><strong>⚠️ Only premium users can watch this video. ⚠️</strong></p>
-                            <p>To unlock video streaming, please upgrade to a premium account.</p>
-                            <button onclick="window.open('${premiumPurchaseUrl}', '_blank')" class="unlock-stream-btn" style="margin-top: 30px;"><i class="fas fa-crown"></i> Buy Premium</button>
-                        </div>
-                    </div>
-                </div>`;
-        }
-    } else {
-         embedHtml = `
-             <div class="embed-section">
-                 <div class="modal-inner-padding">
-                     <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
-                     <div class="no-embed"><p>No streaming link available.</p></div>
-                 </div>
-             </div>`;
-    }
-    
-    let downloadLinksHtml = '';
-    
-    if (movie.DOWNLOAD_LINK && movie.LINK_NAME && 
-        typeof movie.DOWNLOAD_LINK === 'string' && 
-        typeof movie.LINK_NAME === 'string') {
-        
-        const links = movie.DOWNLOAD_LINK.split(',').map(link => link ? link.trim() : '');
-        const names = movie.LINK_NAME.split(',').map(name => name ? name.trim() : '');
-        const episodeGroups = {};
-        
-        names.forEach((name, index) => {
-            const episodeName = name || `Download ${index + 1}`;
-            const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
-                                           episodeName.toLowerCase().includes('premium');
-            const isWithAds = episodeName.toLowerCase().includes('with ads') || 
-                                           episodeName.toLowerCase().includes('ads');
-            
-            if (!isFromPremiumSite && isPremiumEpisode) {
-                return; 
-            }
-            
-            if (isFromPremiumSite && isWithAds) {
-                return; 
-            }
-            
-            if (!episodeGroups[episodeName]) episodeGroups[episodeName] = [];
-            episodeGroups[episodeName].push({ 
-                quality: 'Download', 
-                link: links[index] || '' 
-            });
-        });
-        
-        downloadLinksHtml = Object.entries(episodeGroups).map(([episodeName, qualities], index) => {
-            const hasNonWorkingLinks = qualities.some(q => q.link && q.link.trim().startsWith('#'));
-            let statusBadge = hasNonWorkingLinks ? '<span class="not-working-header-badge">Not working</span>' : (index === 0 ? '<span class="recommended-badge">Recommended</span>' : '');
-            
-            let episodeEmoji = '💫';
-            let qualityClass = '';
-            let subText = '';
-            const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
-                                           episodeName.toLowerCase().includes('premium');
-            
-            if (episodeName.toLowerCase().includes('telegram')) {
-                episodeEmoji = '🚀';
-                qualityClass = 'telegram';
-                subText = 'Fast & Secure Download';
-            } else if (episodeName.toLowerCase().includes('1080p')) {
-                episodeEmoji = '🎯';
-                qualityClass = 'hd-1080p';
-                subText = 'Full HD • Crystal Clear';
-            } else if (episodeName.toLowerCase().includes('720p')) {
-                episodeEmoji = '⚡';
-                qualityClass = 'hd-720p';
-                subText = 'HD Ready • Balanced Quality';
-            } else if (episodeName.toLowerCase().includes('backup')) {
-                episodeEmoji = '🛡️';
-                qualityClass = 'backup';
-                subText = 'Alternative Mirror';
-            } else if (episodeName.toLowerCase().includes('download')) {
-                episodeEmoji = '📥';
-                subText = 'Direct Download';
-            } else if (isPremiumEpisode) {
-                episodeEmoji = '👑';
-                qualityClass = 'premium';
-                subText = 'Premium Exclusive Content';
-            }
-
-            const qualityLinks = qualities.map(q => {
-                const isNotWorking = q.link && q.link.trim().startsWith('#');
-                const is1080p = episodeName.toLowerCase().includes('1080p');
-                const isPremiumEpisodeLink = episodeName.toLowerCase().includes('[premium]') || episodeName.toLowerCase().includes('premium');
-                
-                let isThisButtonUnlocked;
+                if (embedLinks.length >= 1) { 
+                    let episodeOptions = embedNames.map((name, index) => 
+                        `<option value="${index}" data-link="${embedLinks[index]}">${name || `Server ${index + 1}`}</option>`
+                    ).join('');
+                    episodeSelectorHtml = `
+                        <div class="episode-selector">
+                            <span class="episode-label">Select :</span>
+                            <div class="custom-select-wrapper">
+                                <select class="episode-dropdown" id="episodeDropdown">${episodeOptions}</select>
+                            </div>
+                        </div>`;
+                }
 
                 if (isFromPremiumSite) {
-                    isThisButtonUnlocked = true;
+                    embedHtml = `
+                        <div class="embed-section">
+                            <div class="modal-inner-padding">
+                                <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
+                                ${episodeSelectorHtml}
+                            </div>
+                            <div id="embedPlayerContainer" style="margin-top: 20px; min-height: 500px; padding: 0;"></div>
+                        </div>`;
+                        
                 } else {
-                    isThisButtonUnlocked = false; 
-                    
-                    if (is1080p || isPremiumEpisodeLink) {
-                           isThisButtonUnlocked = false;
-                    } else {
-                        const buttonIdCheck = `btn_${btoa(q.link).slice(0, 16)}`;
-                        if (sessionStorage.getItem(buttonIdCheck) === 'true') {
-                            isThisButtonUnlocked = true;
-                        }
-                    }
+                    embedHtml = `
+                        <div class="embed-section">
+                            <div class="modal-inner-padding">
+                                <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
+                                <div class="premium-message">
+                                    <p><strong>⚠️ Only premium users can watch this video. ⚠️</strong></p>
+                                    <p>To unlock video streaming, please upgrade to a premium account.</p>
+                                    <button onclick="window.open('${premiumPurchaseUrl}', '_blank')" class="unlock-stream-btn" style="margin-top: 30px;"><i class="fas fa-crown"></i> Buy Premium</button>
+                                </div>
+                            </div>
+                        </div>`;
                 }
-                
-                const buttonId = `btn_${btoa(q.link).slice(0, 16)}`;
-                
-                let buttonText, buttonIcon, premiumAttribute = '';
-                
-                if (isThisButtonUnlocked) {
-                    buttonText = 'Download Now';
-                    buttonIcon = 'fas fa-download';
-                } else if (is1080p || isPremiumEpisodeLink) {
-                    buttonText = 'Premium Only';
-                    buttonIcon = 'fas fa-lock';
-                    premiumAttribute = 'data-premium="true"';
-                } else {
-                    buttonText = 'Unlock Access';
-                    buttonIcon = 'fas fa-lock';
-                }
-                
-                const buttonClass = isThisButtonUnlocked ? 'download-btn' : 'download-btn locked-btn';
-                
-                
-                let qualityDisplayHtml = '';
-                if (episodeName.toLowerCase().includes('telegram')) {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight ${qualityClass}">
-                            <span class="emoji">🚀</span>
-                            <i class="fab fa-telegram-plane" style="color: #66d9ff; font-size: 1.3rem;"></i>
-                            <div>
-                                <div class="quality-badge">Telegram Channel</div>
-                                <div class="download-stats">
-                                    <span class="download-count">🔥 High Speed Downloads</span>
-                                    <span>•</span>
-                                    <span class="server-status">🟢 Online</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-bolt"></i>
-                                    <span>High Speed</span>
-                                </div>
-                            </div>
-                            <span class="size-info">Fastest Option</span>
-                            <span class="server-badge">Premium</span>
-                        </div>
-                    `;
-                } else if (episodeName.toLowerCase().includes('1080p')) {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight ${qualityClass}">
-                            <span class="emoji">🎯</span>
-                            <div>
-                                <div class="quality-badge">1080p FHD</div>
-                                <div class="quality-indicator">
-                                    <div class="quality-dot fhd"></div>
-                                    <div class="quality-dot fhd"></div>
-                                    <div class="quality-dot fhd"></div>
-                                    <span style="font-size: 0.8rem; margin-left: 5px;">Ultra Quality</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-download"></i>
-                                    <span>Fast Download</span>
-                                </div>
-                            </div>
-                            <span class="size-info">FHD Quality</span>
-                            <span class="server-badge">FHD</span>
-                        </div>
-                    `;
-                } else if (episodeName.toLowerCase().includes('720p')) {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight ${qualityClass}">
-                            <span class="emoji">⚡</span>
-                            <div>
-                                <div class="quality-badge">720p HD</div>
-                                <div class="quality-indicator">
-                                    <div class="quality-dot hd"></div>
-                                    <div class="quality-dot hd"></div>
-                                    <div class="quality-dot"></div>
-                                    <span style="font-size: 0.8rem; margin-left: 5px;">High Quality</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-download"></i>
-                                    <span>Fast Download</span>
-                                </div>
-                            </div>
-                            <span class="size-info">HD Quality</span>
-                            <span class="server-badge">HD</span>
-                        </div>
-                    `;
-                } else if (episodeName.toLowerCase().includes('backup')) {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight ${qualityClass}">
-                            <span class="emoji">🛡️</span>
-                            <div>
-                                <div class="quality-badge">Backup Server</div>
-                                <div class="download-stats">
-                                    <span class="download-count">🔄 Alternative</span>
-                                    <span>•</span>
-                                    <span class="server-status">🟢 Online</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-shield-alt"></i>
-                                    <span>Reliable</span>
-                                </div>
-                            </div>
-                            <span class="size-info">Reliable</span>
-                            <span class="server-badge">Backup</span>
-                        </div>
-                    `;
-                } else if (isPremiumEpisodeLink) {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight premium">
-                            <span class="emoji">👑</span>
-                            <div>
-                                <div class="quality-badge" style="color: #FFD700;">Premium Quality</div>
-                                <div class="download-stats">
-                                    <span class="download-count">⭐ Exclusive Content</span>
-                                    <span>•</span>
-                                    <span class="server-status">🟢 Online</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-crown"></i>
-                                    <span>Premium Speed</span>
-                                </div>
-                            </div>
-                            <span class="size-info">Premium Only</span>
-                            <span class="server-badge" style="background: linear-gradient(135deg, #FFD700, #FFA500);">PREMIUM</span>
-                        </div>
-                    `;
-                } else {
-                    qualityDisplayHtml = `
-                        <div class="download-option-highlight">
-                            <span class="emoji">💫</span>
-                            <div>
-                                <div class="quality-badge">${episodeName}</div>
-                                <div class="download-stats">
-                                    <span class="download-count">📥 Direct Download</span>
-                                    <span class="server-status">🟢 Online</span>
-                                </div>
-                                <div class="speed-indicator">
-                                    <i class="fas fa-download"></i>
-                                    <span>Standard Speed</span>
-                                </div>
-                            </div>
-                            <span class="size-info">Standard</span>
-                            <span class="server-badge">Direct</span>
-                        </div>
-                    `;
-                }
-
-                let linkContent;
-                if (isNotWorking) {
-                    linkContent = `<span style="padding: 10px 15px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 12px; color: var(--accent-red); font-weight: 600; font-size: 0.9rem; cursor: not-allowed;">🚫 Temporarily Unavailable</span>`;
-                } else {
-                    const buttonHtml = `<a href="#" id="${buttonId}" data-download-url="${q.link}" class="${buttonClass}" ${premiumAttribute}><i class="${buttonIcon}"></i> ${buttonText}</a>`;
-                    
-                    if (!isThisButtonUnlocked && (is1080p || isPremiumEpisodeLink)) {
-                        linkContent = `
-                            <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
-                                <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 8px; color: var(--accent-red); font-weight: 500; font-size: 0.8rem; font-style: italic;">
-                                    <i class="fas fa-crown" style="font-size: 0.7rem;"></i> Premium Exclusive Content
-                                </span>
-                                ${buttonHtml}
-                            </div>
-                        `;
-                    } else {
-                        linkContent = buttonHtml;
-                    }
-                }
-
-                return `<div class="download-card"><div style="display: flex; align-items: center; gap: 10px; flex: 1;">${qualityDisplayHtml}</div>${linkContent}</div>`;
-            }).join('');
-
-            return `<div class="episode-item ${index === 0 ? 'active' : ''}">
-                <div class="episode-header">
-                    <div class="episode-header-with-emoji">
-                        <span class="episode-emoji">${episodeEmoji}</span>
-                        <div class="episode-header-text">
-                            <div class="episode-main-text">${episodeName} ${statusBadge}</div>
-                            <div class="episode-sub-text">${subText}</div>
-                        </div>
-                    </div>
-                    <i class="fas fa-chevron-down arrow-icon"></i>
-                </div>
-                <div class="episode-links">${qualityLinks}</div>
-            </div>`;
-        }).join('');
-    } else {
-        downloadLinksHtml = '<div class="no-download"><p>No download links available.</p></div>';
-    }
-
-    // --- END: EMBED & DOWNLOAD LINKS GENERATION LOGIC ---
-    
-    // Set the modal content
-    modalBody.innerHTML = `
-        <div class="modal-inner-padding"> 
-            <div class="download-warning">⚠️ নিচের যে কোনো লিংক থেকে ডাউনলোড করুন। একটি কাজ না করলে অন্য লিংক ব্যবহার করুন। ⚠️</div>
-            <div class="download-suggestion">💡 Note : Use Download Manager Like IDM Or IDA For ⚡ Instant download! 💡</div>
-            <h2 class="movie-title">${movie.MOVIE_NAME || 'Unknown Movie'}</h2>
-            <div class="movie-meta">
-                ${movie.MOVIE_TYPE ? `<div class="meta-item"><i class="fas fa-film"></i><span>${movie.MOVIE_TYPE}</span></div>` : ''}
-                ${movie.VIEW_COUNT ? `<div class="meta-item"><i class="fas fa-eye"></i><span>${movie.VIEW_COUNT.toLocaleString()} Views</span></div>` : ''}
-            </div>
-            ${movie.DESCRIPTION ? `<p class="movie-description">${movie.DESCRIPTION}</p>` : ''}
-        </div>
-        ${embedHtml}
-        <div class="download-section">
-            <div class="modal-inner-padding">
-                <h3 class="section-title"><i class="fas fa-download"></i> Download Options</h3>
-                <div class="episode-list">${downloadLinksHtml}</div>
-            </div>
-        </div>`;
-    
-    // 👑 নতুন এবং সবচেয়ে গুরুত্বপূর্ণ কোড: মুভি লোড হওয়ার পরে ব্যাকগ্রাউন্ডে ভিউ কাউন্ট আপডেট করুন
-    if (movie.ID) {
-        console.log(`Movie ID ${movie.ID} loaded. Triggering background view count update.`);
-        
-        // ⚡️ নতুন, নন-ব্লকিং API কল: Fast Read সম্পন্ন হওয়ার পর Slow Write শুরু হবে
-        fetch(`${API_URL}?action=updateView&id=${movie.ID}`, { 
-            method: 'GET', // GET method is standard for external script execution
-            cache: 'no-cache'
-        })
-        .then(response => {
-            if (response.ok) {
-                console.log('View count update triggered successfully (background task).');
             } else {
-                console.warn('Failed to trigger view count update.');
+                 embedHtml = `
+                     <div class="embed-section">
+                         <div class="modal-inner-padding">
+                             <h3 class="section-title"><i class="fas fa-play-circle"></i> Online Watch</h3>
+                             <div class="no-embed"><p>No streaming link available.</p></div>
+                         </div>
+                     </div>`;
             }
-        })
-        .catch(err => console.error('Error during view count update:', err));
-    }
-    
-    // --- START: PLAYER AND EVENT LISTENERS SETUP LOGIC (UNCHANGED CORE LOGIC) ---
-    
-    if (isFromPremiumSite && movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
-        const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
-        const episodeDropdown = modalBody.querySelector('#episodeDropdown');
-        const getStreamingLinkBtn = modalBody.querySelector('#getStreamingLinkBtn');
-        
-        const updatePlayerAndButton = () => {
-            if (embedLinks.length > 0) {
-                const selectedIndex = episodeDropdown ? episodeDropdown.value : 0;
-                const selectedOption = episodeDropdown ? episodeDropdown.options[selectedIndex] : null;
-                const link = embedLinks[selectedIndex];
-                const name = selectedOption ? selectedOption.textContent : 'Streaming Server';
+            
+            let downloadLinksHtml = '';
+            
+            if (movie.DOWNLOAD_LINK && movie.LINK_NAME && 
+                typeof movie.DOWNLOAD_LINK === 'string' && 
+                typeof movie.LINK_NAME === 'string') {
                 
-                renderPlayer('#embedPlayerContainer', link, movie.THUMBNAIL_URL); 
+                const links = movie.DOWNLOAD_LINK.split(',').map(link => link ? link.trim() : '');
+                const names = movie.LINK_NAME.split(',').map(name => name ? name.trim() : '');
+                const episodeGroups = {};
                 
-                if (getStreamingLinkBtn) {
-                    getStreamingLinkBtn.onclick = () => showVlcPopup(link);
-                }
-            }
-        };
+                names.forEach((name, index) => {
+                    const episodeName = name || `Download ${index + 1}`;
+                    const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
+                                                   episodeName.toLowerCase().includes('premium');
+                    const isWithAds = episodeName.toLowerCase().includes('with ads') || 
+                                                   episodeName.toLowerCase().includes('ads');
+                    
+                    if (!isFromPremiumSite && isPremiumEpisode) {
+                        return; 
+                    }
+                    
+                    if (isFromPremiumSite && isWithAds) {
+                        return; 
+                    }
+                    
+                    if (!episodeGroups[episodeName]) episodeGroups[episodeName] = [];
+                    episodeGroups[episodeName].push({ 
+                        quality: 'Download', 
+                        link: links[index] || '' 
+                    });
+                });
+                
+                downloadLinksHtml = Object.entries(episodeGroups).map(([episodeName, qualities], index) => {
+                    const hasNonWorkingLinks = qualities.some(q => q.link && q.link.trim().startsWith('#'));
+                    let statusBadge = hasNonWorkingLinks ? '<span class="not-working-header-badge">Not working</span>' : (index === 0 ? '<span class="recommended-badge">Recommended</span>' : '');
+                    
+                    let episodeEmoji = '💫';
+                    let qualityClass = '';
+                    let subText = '';
+                    const isPremiumEpisode = episodeName.toLowerCase().includes('[premium]') || 
+                                                   episodeName.toLowerCase().includes('premium');
+                    
+                    if (episodeName.toLowerCase().includes('telegram')) {
+                        episodeEmoji = '🚀';
+                        qualityClass = 'telegram';
+                        subText = 'Fast & Secure Download';
+                    } else if (episodeName.toLowerCase().includes('1080p')) {
+                        episodeEmoji = '🎯';
+                        qualityClass = 'hd-1080p';
+                        subText = 'Full HD • Crystal Clear';
+                    } else if (episodeName.toLowerCase().includes('720p')) {
+                        episodeEmoji = '⚡';
+                        qualityClass = 'hd-720p';
+                        subText = 'HD Ready • Balanced Quality';
+                    } else if (episodeName.toLowerCase().includes('backup')) {
+                        episodeEmoji = '🛡️';
+                        qualityClass = 'backup';
+                        subText = 'Alternative Mirror';
+                    } else if (episodeName.toLowerCase().includes('download')) {
+                        episodeEmoji = '📥';
+                        subText = 'Direct Download';
+                    } else if (isPremiumEpisode) {
+                        episodeEmoji = '👑';
+                        qualityClass = 'premium';
+                        subText = 'Premium Exclusive Content';
+                    }
 
-        if (episodeDropdown) {
-            episodeDropdown.addEventListener('change', updatePlayerAndButton);
-        }
-        
-        updatePlayerAndButton();
-    }
-    
-    const episodeItems = modalBody.querySelectorAll('.episode-item');
-    episodeItems.forEach(item => {
-        const header = item.querySelector('.episode-header');
-        if (header) {
-            header.addEventListener('click', () => {
-                const isActive = item.classList.contains('active');
-                episodeItems.forEach(i => i.classList.remove('active'));
-                if (!isActive) item.classList.add('active');
+                    const qualityLinks = qualities.map(q => {
+                        const isNotWorking = q.link && q.link.trim().startsWith('#');
+                        const is1080p = episodeName.toLowerCase().includes('1080p');
+                        const isPremiumEpisodeLink = episodeName.toLowerCase().includes('[premium]') || episodeName.toLowerCase().includes('premium');
+                        
+                        let isThisButtonUnlocked;
+
+                        if (isFromPremiumSite) {
+                            isThisButtonUnlocked = true;
+                        } else {
+                            isThisButtonUnlocked = false; 
+                            
+                            if (is1080p || isPremiumEpisodeLink) {
+                                   isThisButtonUnlocked = false;
+                            } else {
+                                const buttonIdCheck = `btn_${btoa(q.link).slice(0, 16)}`;
+                                if (sessionStorage.getItem(buttonIdCheck) === 'true') {
+                                    isThisButtonUnlocked = true;
+                                }
+                            }
+                        }
+                        
+                        const buttonId = `btn_${btoa(q.link).slice(0, 16)}`;
+                        
+                        let buttonText, buttonIcon, premiumAttribute = '';
+                        
+                        if (isThisButtonUnlocked) {
+                            buttonText = 'Download Now';
+                            buttonIcon = 'fas fa-download';
+                        } else if (is1080p || isPremiumEpisodeLink) {
+                            buttonText = 'Premium Only';
+                            buttonIcon = 'fas fa-lock';
+                            premiumAttribute = 'data-premium="true"';
+                        } else {
+                            buttonText = 'Unlock Access';
+                            buttonIcon = 'fas fa-lock';
+                        }
+                        
+                        const buttonClass = isThisButtonUnlocked ? 'download-btn' : 'download-btn locked-btn';
+                        
+                        let qualityDisplayHtml = '';
+                        if (episodeName.toLowerCase().includes('telegram')) {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight ${qualityClass}">
+                                    <span class="emoji">🚀</span>
+                                    <i class="fab fa-telegram-plane" style="color: #66d9ff; font-size: 1.3rem;"></i>
+                                    <div>
+                                        <div class="quality-badge">Telegram Channel</div>
+                                        <div class="download-stats">
+                                            <span class="download-count">🔥 High Speed Downloads</span>
+                                            <span>•</span>
+                                            <span class="server-status">🟢 Online</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-bolt"></i>
+                                            <span>High Speed</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">Fastest Option</span>
+                                    <span class="server-badge">Premium</span>
+                                </div>
+                            `;
+                        } else if (episodeName.toLowerCase().includes('1080p')) {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight ${qualityClass}">
+                                    <span class="emoji">🎯</span>
+                                    <div>
+                                        <div class="quality-badge">1080p FHD</div>
+                                        <div class="quality-indicator">
+                                            <div class="quality-dot fhd"></div>
+                                            <div class="quality-dot fhd"></div>
+                                            <div class="quality-dot fhd"></div>
+                                            <span style="font-size: 0.8rem; margin-left: 5px;">Ultra Quality</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-download"></i>
+                                            <span>Fast Download</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">FHD Quality</span>
+                                    <span class="server-badge">FHD</span>
+                                </div>
+                            `;
+                        } else if (episodeName.toLowerCase().includes('720p')) {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight ${qualityClass}">
+                                    <span class="emoji">⚡</span>
+                                    <div>
+                                        <div class="quality-badge">720p HD</div>
+                                        <div class="quality-indicator">
+                                            <div class="quality-dot hd"></div>
+                                            <div class="quality-dot hd"></div>
+                                            <div class="quality-dot"></div>
+                                            <span style="font-size: 0.8rem; margin-left: 5px;">High Quality</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-download"></i>
+                                            <span>Fast Download</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">HD Quality</span>
+                                    <span class="server-badge">HD</span>
+                                </div>
+                            `;
+                        } else if (episodeName.toLowerCase().includes('backup')) {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight ${qualityClass}">
+                                    <span class="emoji">🛡️</span>
+                                    <div>
+                                        <div class="quality-badge">Backup Server</div>
+                                        <div class="download-stats">
+                                            <span class="download-count">🔄 Alternative</span>
+                                            <span>•</span>
+                                            <span class="server-status">🟢 Online</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-shield-alt"></i>
+                                            <span>Reliable</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">Reliable</span>
+                                    <span class="server-badge">Backup</span>
+                                </div>
+                            `;
+                        } else if (isPremiumEpisodeLink) {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight premium">
+                                    <span class="emoji">👑</span>
+                                    <div>
+                                        <div class="quality-badge" style="color: #FFD700;">Premium Quality</div>
+                                        <div class="download-stats">
+                                            <span class="download-count">⭐ Exclusive Content</span>
+                                            <span>•</span>
+                                            <span class="server-status">🟢 Online</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-crown"></i>
+                                            <span>Premium Speed</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">Premium Only</span>
+                                    <span class="server-badge" style="background: linear-gradient(135deg, #FFD700, #FFA500);">PREMIUM</span>
+                                </div>
+                            `;
+                        } else {
+                            qualityDisplayHtml = `
+                                <div class="download-option-highlight">
+                                    <span class="emoji">💫</span>
+                                    <div>
+                                        <div class="quality-badge">${episodeName}</div>
+                                        <div class="download-stats">
+                                            <span class="download-count">📥 Direct Download</span>
+                                            <span class="server-status">🟢 Online</span>
+                                        </div>
+                                        <div class="speed-indicator">
+                                            <i class="fas fa-download"></i>
+                                            <span>Standard Speed</span>
+                                        </div>
+                                    </div>
+                                    <span class="size-info">Standard</span>
+                                    <span class="server-badge">Direct</span>
+                                </div>
+                            `;
+                        }
+
+                        let linkContent;
+                        if (isNotWorking) {
+                            linkContent = `<span style="padding: 10px 15px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 12px; color: var(--accent-red); font-weight: 600; font-size: 0.9rem; cursor: not-allowed;">🚫 Temporarily Unavailable</span>`;
+                        } else {
+                            const buttonHtml = `<a href="#" id="${buttonId}" data-download-url="${q.link}" class="${buttonClass}" ${premiumAttribute}><i class="${buttonIcon}"></i> ${buttonText}</a>`;
+                            
+                            if (!isThisButtonUnlocked && (is1080p || isPremiumEpisodeLink)) {
+                                linkContent = `
+                                    <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap; justify-content: flex-end;">
+                                        <span style="display: inline-flex; align-items: center; gap: 5px; padding: 5px 10px; background: rgba(255, 27, 75, 0.1); border: 1px solid var(--accent-red); border-radius: 8px; color: var(--accent-red); font-weight: 500; font-size: 0.8rem; font-style: italic;">
+                                            <i class="fas fa-crown" style="font-size: 0.7rem;"></i> Premium Exclusive Content
+                                        </span>
+                                        ${buttonHtml}
+                                    </div>
+                                `;
+                            } else {
+                                linkContent = buttonHtml;
+                            }
+                        }
+
+                        return `<div class="download-card"><div style="display: flex; align-items: center; gap: 10px; flex: 1;">${qualityDisplayHtml}</div>${linkContent}</div>`;
+                    }).join('');
+
+                    return `<div class="episode-item ${index === 0 ? 'active' : ''}">
+                        <div class="episode-header">
+                            <div class="episode-header-with-emoji">
+                                <span class="episode-emoji">${episodeEmoji}</span>
+                                <div class="episode-header-text">
+                                    <div class="episode-main-text">${episodeName} ${statusBadge}</div>
+                                    <div class="episode-sub-text">${subText}</div>
+                                </div>
+                            </div>
+                            <i class="fas fa-chevron-down arrow-icon"></i>
+                        </div>
+                        <div class="episode-links">${qualityLinks}</div>
+                    </div>`;
+                }).join('');
+            } else {
+                downloadLinksHtml = '<div class="no-download"><p>No download links available.</p></div>';
+            }
+
+            modalBody.innerHTML = `
+                <div class="modal-inner-padding"> 
+                    <div class="download-warning">⚠️ নিচের যে কোনো লিংক থেকে ডাউনলোড করুন। একটি কাজ না করলে অন্য লিংক ব্যবহার করুন। ⚠️</div>
+                    <div class="download-suggestion">💡 Note : Use Download Manager Like IDM Or IDA For ⚡ Instant download! 💡</div>
+                    <h2 class="movie-title">${movie.MOVIE_NAME || 'Unknown Movie'}</h2>
+                    <div class="movie-meta">
+                        ${movie.MOVIE_TYPE ? `<div class="meta-item"><i class="fas fa-film"></i><span>${movie.MOVIE_TYPE}</span></div>` : ''}
+                        ${movie.VIEW_COUNT ? `<div class="meta-item"><i class="fas fa-eye"></i><span>${movie.VIEW_COUNT.toLocaleString()} Views</span></div>` : ''}
+                    </div>
+                    ${movie.DESCRIPTION ? `<p class="movie-description">${movie.DESCRIPTION}</p>` : ''}
+                </div>
+                ${embedHtml}
+                <div class="download-section">
+                    <div class="modal-inner-padding">
+                        <h3 class="section-title"><i class="fas fa-download"></i> Download Options</h3>
+                        <div class="episode-list">${downloadLinksHtml}</div>
+                    </div>
+                </div>`;
+            
+            if (movie.ID) {
+                console.log(`Movie ID ${movie.ID} loaded. Triggering background view count update.`);
+                
+                fetch(`${API_URL}?action=updateView&id=${movie.ID}`, { 
+                    method: 'GET',
+                    cache: 'no-cache'
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log('View count update triggered successfully (background task).');
+                    } else {
+                        console.warn('Failed to trigger view count update.');
+                    }
+                })
+                .catch(err => console.error('Error during view count update:', err));
+            }
+            
+            if (isFromPremiumSite && movie.EMBED_LINK && typeof movie.EMBED_LINK === 'string') {
+                const embedLinks = movie.EMBED_LINK.split(',').map(l => l ? l.trim() : '');
+                const episodeDropdown = modalBody.querySelector('#episodeDropdown');
+                
+                const updatePlayerAndButton = () => {
+                    if (embedLinks.length > 0) {
+                        const selectedIndex = episodeDropdown ? episodeDropdown.value : 0;
+                        const selectedOption = episodeDropdown ? episodeDropdown.options[selectedIndex] : null;
+                        const link = embedLinks[selectedIndex];
+                        
+                        renderPlayer('#embedPlayerContainer', link, movie.THUMBNAIL_URL); 
+                    }
+                };
+
+                if (episodeDropdown) {
+                    episodeDropdown.addEventListener('change', updatePlayerAndButton);
+                }
+                
+                updatePlayerAndButton();
+            }
+            
+            const episodeItems = modalBody.querySelectorAll('.episode-item');
+            episodeItems.forEach(item => {
+                const header = item.querySelector('.episode-header');
+                if (header) {
+                    header.addEventListener('click', () => {
+                        const isActive = item.classList.contains('active');
+                        episodeItems.forEach(i => i.classList.remove('active'));
+                        if (!isActive) item.classList.add('active');
+                    });
+                }
             });
         }
-    });
-    // --- END: PLAYER AND EVENT LISTENERS SETUP LOGIC ---
-}
 
         // ===== ERROR HANDLING =====
         function showError(error) {
@@ -1885,12 +1717,6 @@ function isDirectVideoLink(url) {
 
         // ===== KEYBOARD SHORTCUTS FOR MODALS =====
         document.addEventListener('keydown', e => { 
-            if (vlcPopupModal.style.display === 'flex' && e.key === 'Escape') {
-                e.preventDefault();
-                closeModal('vlcPopupModal');
-                return;
-            }
-            
             if (modal.style.display === 'block' && e.key === 'Escape') {
                 e.preventDefault();
                 closeModal('movieModal');
@@ -1938,7 +1764,3 @@ function isDirectVideoLink(url) {
     </script>
 </body>
 </html>
-
-
-
-
