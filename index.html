@@ -1330,7 +1330,6 @@ function isDirectVideoLink(url) {
     
     container.style.display = 'block'; 
 
-    // আগের প্লেয়ার ইনস্ট্যান্স রিমুভ করা
     if (player) {
         try {
             player.remove();
@@ -1340,20 +1339,19 @@ function isDirectVideoLink(url) {
         player = null;
     }
 
-    // যদি লিঙ্কটি প্রক্সি বা ডাইরেক্ট ভিডিও হয়
     if (isDirectVideoLink(link)) {
         container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
         
         try {
             player = jwplayer("jwplayer-video");
-player.setup({
-    file: link,
-    type: 'video/mp4',
-    image: thumbnailUrl || "",
-    aspectratio: "16:9",
-    autostart: false,
-    controls: true,
-    primary: "html5"
+            player.setup({
+                file: link,
+                type: 'video/mp4',
+                image: thumbnailUrl || "",
+                aspectratio: "16:9",
+                autostart: false, // এখানে false করে দিলে ইউজার ক্লিক না করা পর্যন্ত ভিডিও চলবে না
+                controls: true,
+                primary: "html5",
                 logo: {
                     file: "https://drive.google.com/thumbnail?id=1otiMKTEhxQZe2xxQDs0-KShH9hNJlrjF&sz=w1000",
                     position: "top-left"
@@ -1366,7 +1364,6 @@ player.setup({
                 }
             });
 
-            // সাউন্ড সমস্যার জন্য কাস্টম বাটন যোগ করা (ঐচ্ছিক)
             player.addButton(
                 "https://cdn-icons-png.flaticon.com/512/727/727245.png",
                 "Sound Problem? Use VLC",
@@ -1381,7 +1378,6 @@ player.setup({
             container.innerHTML = `<div class="no-embed"><p>Error loading premium player.</p></div>`;
         }
     } else {
-        // যদি লিঙ্কটি ইউটিউব বা OK.ru-এর মতো এমবেড লিঙ্ক হয়
         container.innerHTML = createIframe(link);
     }
 }
@@ -1942,6 +1938,7 @@ player.setup({
     </script>
 </body>
 </html>
+
 
 
 
