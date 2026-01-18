@@ -1291,10 +1291,12 @@
                 lowerCaseUrl.includes('pixeldrain.tech/api/file/') || 
                 lowerCaseUrl.includes('pixeldrain.nl/api/file/') || 
                 lowerCaseUrl.includes('pixeldra.in/api/file/')) {
+                lowerCaseUrl.includes('workers.dev/stream')) {  // ✅ Workers.dev প্রোক্সি লিংক যোগ করুন
                 return true;
             }
             
             return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
+            lowerCaseUrl.includes('/stream?id=');  // ✅ Stream লিংক যোগ করুন
         }
 
         function getOkVideoId(url) {
@@ -1328,169 +1330,124 @@
             }
         }
 
-        function renderPlayer(containerSelector, link, thumbnailUrl) {
-            const container = document.querySelector(containerSelector);
-            if (!container) return;
+        // JW Player setup আপডেট করুন
+function renderPlayer(containerSelector, link, thumbnailUrl) {
+    const container = document.querySelector(containerSelector);
+    if (!container) return;
+    
+    container.style.display = 'block';
+
+    // পূর্ববর্তী প্লেয়ার রিমুভ করুন
+    if (player) {
+        try {
+            player.remove();
+        } catch (e) {
+            console.warn("Could not remove previous player instance:", e);
+        }
+        player = null;
+    }
+
+    // প্রোক্সি লিংক ডিটেক্ট করুন
+    const isProxyLink = link.includes('workers.dev/stream');
+    const isDirectVideo = isDirectVideoLink(link);
+
+    if (isDirectVideo || isProxyLink) {
+        container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
+        
+        let sources = [];
+        
+        if (isProxyLink) {
+            // প্রোক্সি লিংকের জন্য
+            sources = [{
+                file: link,
+                type: "video/mp4",
+                label: "Stream",
+                default: true
+            }];
+        } else if (isDirectVideo) {
+            // ডাইরেক্ট ভিডিও লিংকের জন্য (আপনার আগের লজিক)
+            const pixeldrainMatch = link.match(/pixeldra(in|\.com|\.dev|\.net|\.biz|\.tech|\.nl)\/api\/file\/([a-zA-Z0-9]+)/);
             
-            container.style.display = 'block'; 
-
-            if (player) {
-                try {
-                    player.remove();
-                } catch (e) {
-                    console.warn("Could not remove previous player instance:", e);
-                }
-                player = null;
-            }
-            
-            if (jwSaveListener) {
-                window.removeEventListener('beforeunload', jwSaveListener);
-                jwSaveListener = null;
-            }
-            
-            if (jwTimeInterval) {
-                clearInterval(jwTimeInterval);
-                jwTimeInterval = null;
-            }
-
-            if (isDirectVideoLink(link)) {
-                container.innerHTML = `<div id="jwplayer-video" style="border-radius: 15px; overflow: hidden;"></div>`;
-                
-                let sources = [];
-                const pixeldrainMatch = link.match(/pixeldra(in|\.com|\.dev|\.net|\.biz|\.tech|\.nl)\/api\/file\/([a-zA-Z0-9]+)/);
-
-                if (pixeldrainMatch && pixeldrainMatch[2]) {
-                    const fileId = pixeldrainMatch[2];
-                    sources = [
-                        { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "HD" },
-                        { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.dev" },
-                        { file: `https://pixeldrain.net/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.net" },
-                        { file: `https://pixeldrain.biz/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.biz" },
-                        { file: `https://pixeldrain.tech/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.tech" },
-                        { file: `https://pixeldrain.nl/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.nl" },
-                        { file: `https://pixeldrain.com/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.com" },
-                        { file: `https://pixeldra.in/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldra.in" }
-                    ];
-                } else {
-                    sources = [{
-                        file: link,
-                        type: 'video/mp4',
-                        label: 'HD'
-                    }];
-                }
-
-                try {
-                    player = jwplayer("jwplayer-video");
-                    player.setup({
-                        sources: sources,
-                        image: thumbnailUrl || "",
-                        aspectratio: "16:9",
-                        seeking: 10,
-                        preload: "metadata",
-                        autostart: false,
-                        controls: true,
-                        primary: "html5",
-                        displaytitle: true,
-                        cast: {},
-                        playbackRateControls: false,
-                        logo: {
-                            file: "https://drive.google.com/thumbnail?id=1CyDac4HsCeKQ8Tz8C2sSLFvSQFTd2KkO&sz=w1000",
-                            position: "top-left"
-                        },
-                        skin: {
-                            name: "flixify",
-                            active: "#ff0059",
-                            inactive: "#00f7ff",
-                            background: "rgba(0,0,0,0.8)"
-                        },
-                        advertising: {
-                            client: "vast",
-                            schedule: {}
-                        },
-                        captions: {},
-                        tracks: []
-                    });
-
-                    player.addButton("./logomini.svg", "Powered By JH Movie Hub Team!", function() {
-                        var win = window.open("https://prm.flixify.jhtone.site/", "_blank");
-                        win.focus();
-                    }, "Brand Logo");
-
-                    player.on("setupError", function(event) {
-                        console.log("Setup Error:", event);
-                        showNotification("Player setup error. Please try again.", "error");
-                    });
-
-                    player.on("error", function(event) {
-                        console.log("Video Error:", event);
-                        showNotification("Video playback error. Check link or try backup.", "error");
-                    });
-
-                    player.on("play", function() {
-                        console.log("Video started playing");
-                    });
-
-                    player.on('ready', function() {
-                        setTimeout(function() {
-                            const playerContainerSelector = '#jwplayer-video';
-                            const playerContainer = document.querySelector(playerContainerSelector);
-                            
-                            if (playerContainer) {
-                                const rewindContainer = playerContainer.querySelector('.jw-display-icon-rewind');
-                                if (rewindContainer) {
-                                    const forwardContainer = rewindContainer.cloneNode(true);
-                                    const forwardDisplayButton = forwardContainer.querySelector('.jw-icon-rewind');
-                                    if (forwardDisplayButton) {
-                                        forwardDisplayButton.style.transform = "scaleX(-1)";
-                                        forwardDisplayButton.setAttribute('aria-label', 'Forward 10 Seconds');
-                                        
-                                        const nextContainer = playerContainer.querySelector('.jw-display-icon-next');
-                                        if (nextContainer && nextContainer.parentNode) {
-                                            nextContainer.parentNode.insertBefore(forwardContainer, nextContainer);
-                                            
-                                            forwardDisplayButton.onclick = function() {
-                                                player.seek(player.getPosition() + 10);
-                                            };
-                                        }
-                                    }
-                                }
-
-                                const buttonContainer = playerContainer.querySelector('.jw-button-container');
-                                if (buttonContainer) {
-                                    const rewindControlBarButton = buttonContainer.querySelector(".jw-icon-rewind");
-                                    if (rewindControlBarButton) {
-                                        const forwardControlBarButton = rewindControlBarButton.cloneNode(true);
-                                        forwardControlBarButton.style.transform = "scaleX(-1)";
-                                        forwardControlBarButton.setAttribute('aria-label', 'Forward 10 Seconds');
-                                        
-                                        rewindControlBarButton.parentNode.insertBefore(forwardControlBarButton, rewindControlBarButton.nextElementSibling);
-                                        
-                                        forwardControlBarButton.onclick = function() {
-                                            player.seek(player.getPosition() + 10);
-                                        };
-                                    }
-                                }
-
-                                const nextButton = playerContainer.querySelector('.jw-display-icon-next');
-                                if (nextButton) {
-                                    nextButton.style.display = 'none';
-                                }
-                            }
-                        }, 1000);
-                    });
-
-                    window.player = player;
-                
-                } catch (err) {
-                    console.error("Failed to initialize JWPlayer:", err);
-                    container.innerHTML = `<div class="no-embed"><p>Error loading video player.</p></div>`;
-                    showNotification("Error loading video player.", "error");
-                }
-
+            if (pixeldrainMatch && pixeldrainMatch[2]) {
+                const fileId = pixeldrainMatch[2];
+                sources = [
+                    { file: `https://pixeldrain.dev/api/file/${fileId}?download`, type: "video/mp4", label: "HD" },
+                    { file: `https://pixeldrain.net/api/file/${fileId}?download`, type: "video/mp4", label: "Backup pixeldrain.net" },
+                    // ... আপনার অন্যান্য ব্যাকআপ লিংক
+                ];
             } else {
-                container.innerHTML = createIframe(link);
+                sources = [{
+                    file: link,
+                    type: 'video/mp4',
+                    label: 'HD'
+                }];
             }
         }
+
+        try {
+            player = jwplayer("jwplayer-video");
+            player.setup({
+                sources: sources,
+                image: thumbnailUrl || "",
+                aspectratio: "16:9",
+                primary: "html5",
+                autostart: false,
+                controls: true,
+                preload: "metadata",
+                playbackRateControls: false,
+                logo: {
+                    file: "https://drive.google.com/thumbnail?id=1CyDac4HsCeKQ8Tz8C2sSLFvSQFTd2KkO&sz=w1000",
+                    position: "top-left"
+                },
+                skin: {
+                    name: "flixify",
+                    active: "#ff0059",
+                    inactive: "#00f7ff",
+                    background: "rgba(0,0,0,0.8)"
+                },
+                advertising: {
+                    client: "vast",
+                    schedule: {}
+                },
+                captions: {},
+                tracks: [],
+                // CORS সেটিংস
+                crossorigin: "anonymous"
+            });
+
+            // Error handling improve করুন
+            player.on("error", function(event) {
+                console.log("Player Error:", event);
+                
+                // প্রোক্সি লিংকে error হলে alternative লিংক ট্রাই করুন
+                if (isProxyLink && event.code === 224003) {
+                    showNotification("Streaming error. Trying alternative method...", "error");
+                    
+                    // Iframe ফ্যালব্যাক
+                    setTimeout(() => {
+                        container.innerHTML = createIframe(link);
+                    }, 2000);
+                }
+            });
+
+            player.on("buffer", function(event) {
+                console.log("Buffering state:", event);
+            });
+
+            player.on("play", function() {
+                console.log("Video playing from:", link);
+            });
+
+        } catch (err) {
+            console.error("Failed to initialize JWPlayer:", err);
+            // ফ্যালব্যাক হিসেবে iframe ব্যবহার করুন
+            container.innerHTML = createIframe(link);
+        }
+    } else {
+        // অন্যান্য লিংকের জন্য iframe ব্যবহার করুন
+        container.innerHTML = createIframe(link);
+    }
+}
 
         // ===== VLC POPUP FUNCTIONS =====
         function showVlcPopup(streamLink) {
@@ -2068,3 +2025,4 @@
     </script>
 </body>
 </html>
+
