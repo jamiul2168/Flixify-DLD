@@ -1111,21 +1111,23 @@
         }
 
         function isDirectVideoLink(url) {
-            if (typeof url !== 'string') return false;
-            const lowerCaseUrl = url.toLowerCase();
-            
-            if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || 
-                lowerCaseUrl.includes('pixeldrain.dev/api/file/') || 
-                lowerCaseUrl.includes('pixeldrain.net/api/file/') || 
-                lowerCaseUrl.includes('pixeldrain.biz/api/file/') || 
-                lowerCaseUrl.includes('pixeldrain.tech/api/file/') || 
-                lowerCaseUrl.includes('pixeldrain.nl/api/file/') || 
-                lowerCaseUrl.includes('pixeldra.in/api/file/')) {
-                return true;
-            }
-            
-            return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
-        }
+    if (typeof url !== 'string') return false;
+    const lowerCaseUrl = url.toLowerCase();
+    
+    // 🔥 আপনার ওয়ার্কার ডোমেইন চেক (এটি যোগ করা হয়েছে)
+    if (lowerCaseUrl.includes('flixify-stream.jhprm01.workers.dev')) {
+        return true;
+    }
+    
+    // পিক্সেলড্রেন চেক
+    if (lowerCaseUrl.includes('pixeldrain.com/api/file/') || 
+        lowerCaseUrl.includes('pixeldra.in/api/file/')) {
+        return true;
+    }
+    
+    // ফাইল এক্সটেনশন চেক
+    return lowerCaseUrl.endsWith('.mp4') || lowerCaseUrl.endsWith('.mkv') || lowerCaseUrl.endsWith('.webm');
+}
 
         function getOkVideoId(url) {
             const match = url.match(/(?:\/video\/|\/videoembed\/)(\d+)/);
@@ -1832,3 +1834,4 @@
     </script>
 </body>
 </html>
+
